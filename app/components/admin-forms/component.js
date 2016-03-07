@@ -23,6 +23,10 @@ export default Ember.Component.extend({
 
     createBrand(params) {
       this.sendAction('createBrand', params);
+    },
+
+    createStore(params) {
+      this.sendAction('createStore', params);
     }
   }
 });
