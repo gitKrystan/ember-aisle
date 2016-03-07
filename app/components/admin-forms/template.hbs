@@ -1,14 +1,14 @@
-<button {{action "showBrandForm"}} class="btn btn-default">Create Brand</button>
+<button {{action "showBrandForm"}} class="btn btn-block btn-default">Create Brand</button>
 {{#if showBrandForm}}
   {{new-brand createBrand="createBrand"}}
 {{/if}}
 
-<button {{action "showStoreForm"}} class="btn btn-default">Create Store</button>
+<button {{action "showStoreForm"}} class="btn btn-block btn-default">Create Store</button>
 {{#if showStoreForm}}
-  {{new-store brands=model.brands}}
+  {{new-store brands=brands createStore="createStore"}}
 {{/if}}
 
-<button {{action "showEditStore"}} class="btn btn-default">Edit Store</button>
+<button {{action "showEditStore"}} class="btn btn-block btn-default">Edit Store</button>
 {{#if showEditStore}}
   <button {{action "showNewAisleForm"}} class="btn btn-default">New Aisle</button>
   {{#if showNewAisleForm}}

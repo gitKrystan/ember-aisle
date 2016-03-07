@@ -1,6 +1,25 @@
 <form>
-  <label for="storeName">Name</label>
-  {{input value=storeName class="form-control"}}
-  <label for="storeAddress">Address</label>
-  {{input value=storeAddress class="form-control"}}
+  <h3>New Store</h3>
+  <div class="form-group">
+    <label for="storeBrand">Brand</label>
+    {{#power-select
+      selected=currentBrand
+      options=brands
+      onchange=(action (mut currentBrand))
+      as |brand|
+    }}
+      {{brand.name}}
+    {{/power-select}}
+  </div>
+  <div class="form-group">
+    <label for="storeName">Name</label>
+    {{input value=storeName class="form-control"}}
+  </div>
+  <div class="form-group">
+    <label for="storeAddress">Address</label>
+    {{input value=storeAddress class="form-control"}}
+  </div>
+  <div class="form-group">
+    <button {{action "createStore"}} class="btn btn-primary">Create Store</button>
+  </div>
 </form>

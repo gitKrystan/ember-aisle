@@ -11,6 +11,11 @@ export default Ember.Route.extend({
     createBrand(params) {
       var newBrand = this.store.createRecord('brand', params);
       newBrand.save();
+    },
+
+    createStore(params) {
+      var newStore = this.store.createRecord('shop', params);
+      newStore.save();
     }
   }
 });

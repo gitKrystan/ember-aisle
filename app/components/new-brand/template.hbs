@@ -1,6 +1,11 @@
 <form>
-  <label for="brandName">Name</label>
-  {{input value=brandName}}
+  <h3>New Brand</h3>
+  <div class="form-group">
+    <label for="brandName">Name</label>
+    {{input value=brandName class="form-control"}}
+  </div>
   <!-- {{new-store}} -->
-  <button {{action "createBrand"}} class="btn btn-success">Create Brand</button>
+  <div class="form-group">
+    <button {{action "createBrand"}} class="btn btn-success">Create Brand</button>
+  </div>
 </form>
