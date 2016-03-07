@@ -4,6 +4,7 @@ export default Ember.Component.extend({
   showBrandForm: false,
   showShopForm: false,
   showEditShop: false,
+  showNewCategoryForm: false,
   currentShop: null,
 
   actions: {
@@ -37,12 +38,24 @@ export default Ember.Component.extend({
       }
     },
 
+    showNewCategoryForm() {
+      if (this.get('showNewCategoryForm') === false) {
+        this.set('showNewCategoryForm', true);
+      } else {
+        this.set('showNewCategoryForm', false);
+      }
+    },
+
     createBrand(params) {
       this.sendAction('createBrand', params);
     },
 
     createShop(params) {
       this.sendAction('createShop', params);
-    }
+    },
+
+    createCategory(params) {
+      this.sendAction('createCategory', params);
+    },
   }
 });

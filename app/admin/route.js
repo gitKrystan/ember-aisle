@@ -17,6 +17,15 @@ export default Ember.Route.extend({
     createShop(params) {
       var newShop = this.store.createRecord('shop', params);
       newShop.save();
+    },
+
+    createCategory(params) {
+      var newCategory = this.store.createRecord('category', params);
+      var aisle = params.aisle;
+      aisle.get('categories').addObject(newCategory);
+      newCategory.save().then(function() {
+        aisle.save();
+      });
     }
   }
 });
