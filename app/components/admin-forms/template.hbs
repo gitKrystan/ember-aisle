@@ -1,0 +1,21 @@
+{{#if showBrandForm}}
+  {{new-brand}}
+{{/if}}
+
+{{#if showStoreForm}}
+  {{new-store}}
+{{/if}}
+
+{{#if editStore}}
+  {{#if showAisleForm}}
+    {{new-aisle store=currentStore}}
+  {{/if}}
+
+  {{#if showCategoryForm}}
+    {{new-category store=currentStore}}
+  {{/if}}
+
+  {{#if showProductForm}}
+    {{new-product store=currentStore}}
+  {{/if}}
+{{/if}}
