@@ -1,1 +1,76 @@
+// General
+$aisle-padding-typ: 15px;
+
+// Colors
+$aisle-primary-color-dark:   #689F38;
+$aisle-primary-color:        #8BC34A;
+$aisle-primary-color-light:  #DCEDC8;
+$aisle-primary-color-text:   #212121;
+$aisle-accent-color:         #004D40;
+$aisle-primary-text-color:   #212121;
+$aisle-secondary-text-color: #727272;
+$aisle-divider-color:        #B6B6B6;
+$aisle-red:                  #FF5252;
+$aisle-yellow:               #FFC107;
+
+$white:                  #fff;
+$gray-lighter:           lighten($aisle-divider-color, 12%);
+$gray-light:             $aisle-divider-color;
+$gray:                   $aisle-secondary-text-color;
+$gray-dark:              darken($gray, 12%);
+$gray-darker:            darken($gray, 25%);
+$gray-base:              $aisle-primary-text-color;
+
+$brand-primary:         $aisle-primary-color-dark;
+$brand-success:         $aisle-primary-color;
+$brand-info:            $aisle-accent-color;
+$brand-warning:         $aisle-yellow;
+$brand-danger:          $aisle-red;
+
+// Border
+$border-radius-base: 0;
+$border-radius-large: 0;
+$border-radius-small: 0;
+
+// Main elements
+$body-bg: $white;
+
+// Navbar
+$navbar-default-brand-color: $white;
+$navbar-default-color: $white;
+$navbar-default-link-color: $white;
+$navbar-default-link-hover-color: $aisle-accent-color;
+$navbar-default-link-active-color: $white;
+$navbar-default-link-active-bg: $aisle-primary-color-dark;
+$navbar-default-brand-hover-color: $aisle-accent-color;
+$navbar-default-bg: $aisle-primary-color;
+$navbar-default-border: $aisle-primary-color;
+$navbar-padding-vertical: $aisle-padding-typ;
+
+
+// Forms
+$input-border-focus: $brand-primary;
+$input-color: $gray-base;
+
+// Text
+$text-color: $aisle-primary-text-color;
+$link-hover-color: $aisle-primary-text-color;
+$font-family-sans-serif: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-serif: "Abril Fatface", Georgia, "Times New Roman", Times, serif;
+$headings-font-weight: 300;
+
 @import "bootstrap";
+@import url(https://fonts.googleapis.com/css?family=Abril+Fatface|Lato:400,300,700);
+
+h1 {
+  font-family: $font-family-serif;
+}
+
+.navbar {
+
+  .navbar-brand {
+    font-family: $font-family-serif;
+    font-size: $navbar-height / 1.25;
+    letter-spacing: 1px;
+  }
+}
