@@ -1,0 +1,12 @@
+.aisle-inline-form-col {
+  padding-right: 0;
+  padding-left: 5px;
+
+  &:first-of-type {
+    padding-left: $aisle-padding-typ;
+  }
+
+  &:last-of-type {
+    padding-right: $aisle-padding-typ;
+  }
+}
