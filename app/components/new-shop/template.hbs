@@ -1,7 +1,7 @@
 <form>
-  <h3>New Store</h3>
+  <h3>New Shop</h3>
   <div class="form-group">
-    <label for="storeBrand">Brand</label>
+    <label for="shopBrand">Brand</label>
     {{#power-select
       selected=currentBrand
       options=brands
@@ -12,14 +12,14 @@
     {{/power-select}}
   </div>
   <div class="form-group">
-    <label for="storeName">Name</label>
-    {{input value=storeName class="form-control"}}
+    <label for="shopName">Name</label>
+    {{input value=shopName class="form-control"}}
   </div>
   <div class="form-group">
-    <label for="storeAddress">Address</label>
-    {{input value=storeAddress class="form-control"}}
+    <label for="shopAddress">Address</label>
+    {{input value=shopAddress class="form-control"}}
   </div>
   <div class="form-group">
-    <button {{action "createStore"}} class="btn btn-primary">Create Store</button>
+    <button {{action "createShop"}} class="btn btn-primary">Create Shop</button>
   </div>
 </form>
