@@ -1,0 +1,21 @@
+<h3>New Category</h3>
+<form>
+  <div class="form-group">
+    <label>Select an Aisle</label>
+    {{#power-select
+      options=shop.aisles
+      selected=currentAisle
+      onchange=(action (mut currentAisle))
+      as |aisle|
+    }}
+      {{aisle.name}}
+    {{/power-select}}
+  </div>
+  <div class="form-group">
+    <label for="categoryName">Name</label>
+    {{input value=categoryName class="form-control"}}
+  </div>
+  <div class="form-group">
+    <button {{action "createCategory"}} class="btn btn-success">Add Category</button>
+  </div>
+</form>
