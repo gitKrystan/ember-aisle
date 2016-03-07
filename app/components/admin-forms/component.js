@@ -20,5 +20,9 @@ export default Ember.Component.extend({
         this.set('showStoreForm', false);
       }
     },
+
+    createBrand(params) {
+      this.sendAction('createBrand', params);
+    }
   }
 });
