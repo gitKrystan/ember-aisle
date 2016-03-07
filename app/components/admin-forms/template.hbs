@@ -3,25 +3,33 @@
   {{new-brand createBrand="createBrand"}}
 {{/if}}
 
-<button {{action "showStoreForm"}} class="btn btn-block btn-default">Create Store</button>
-{{#if showStoreForm}}
-  {{new-store brands=brands createStore="createStore"}}
+<button {{action "showShopForm"}} class="btn btn-block btn-default">Create Shop</button>
+{{#if showShopForm}}
+  {{new-shop brands=brands createShop="createShop"}}
 {{/if}}
 
-<button {{action "showEditStore"}} class="btn btn-block btn-default">Edit Store</button>
-{{#if showEditStore}}
+<button {{action "showEditShop"}} class="btn btn-block btn-default">Edit Shop</button>
+{{#if showEditShop}}
+  {{#power-select
+    selected=currentShop
+    options=shops
+    onchange=(action (mut currentShop))
+    as |shop|
+  }}
+    {{brand.name}}
+  {{/power-select}}
   <button {{action "showNewAisleForm"}} class="btn btn-default">New Aisle</button>
   {{#if showNewAisleForm}}
-    {{new-aisle store=currentStore}}
+    {{new-aisle shop=currentShop}}
   {{/if}}
 
   <button {{action "showNewCategoryForm"}} class="btn btn-default">New Category</button>
   {{#if showNewCategoryForm}}
-    {{new-category store=currentStore}}
+    {{new-category shop=currentShop}}
   {{/if}}
 
   <button {{action "showNewProductForm"}} class="btn btn-default">New Product</button>
   {{#if showNewProductForm}}
-    {{new-product store=currentStore}}
+    {{new-product shop=currentShop}}
   {{/if}}
 {{/if}}

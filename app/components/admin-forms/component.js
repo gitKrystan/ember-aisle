@@ -2,7 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   showBrandForm: false,
-  showStoreForm: false,
+  showShopForm: false,
+  showEditeShop: false,
 
   actions: {
     showBrandForm() {
@@ -13,11 +14,19 @@ export default Ember.Component.extend({
       }
     },
 
-    showStoreForm() {
-      if (this.get('showStoreForm') === false) {
-        this.set('showStoreForm', true);
+    showShopForm() {
+      if (this.get('showShopForm') === false) {
+        this.set('showShopForm', true);
       } else {
-        this.set('showStoreForm', false);
+        this.set('showShopForm', false);
+      }
+    },
+
+    showEditShop() {
+      if (this.get('showEditShop') === false) {
+        this.set('showEditShop', true);
+      } else {
+        this.set('showEditShop', false);
       }
     },
 
@@ -25,8 +34,8 @@ export default Ember.Component.extend({
       this.sendAction('createBrand', params);
     },
 
-    createStore(params) {
-      this.sendAction('createStore', params);
+    createShop(params) {
+      this.sendAction('createShop', params);
     }
   }
 });
