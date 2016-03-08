@@ -1,0 +1,32 @@
+<form>
+  <h3>Add Product</h3>
+  <div class="form-group">
+    <label>Aisle</label>
+    {{#power-select
+      selected=currentAisle
+      options=shop.aisles
+      onchange=(action (mut currentAisle))
+      as |aisle|
+    }}
+      {{aisle.name}}
+    {{/power-select}}
+  </div>
+  <div class="form-group">
+    <label>Category</label>
+    {{#power-select
+      selected=currentCategory
+      options=currentAisle.categories
+      onchange=(action (mut currentCategory))
+      as |category|
+    }}
+      {{category.name}}
+    {{/power-select}}
+  </div>
+  <div class="form-group">
+    <label for="productName">Name</label>
+    {{input value=productName class="form-control"}}
+  </div>
+  <div class="form-group">
+    <button {{action "createProduct"}} class="btn btn-success">Add Product</button>
+  </div>
+</form>
