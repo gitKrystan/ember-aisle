@@ -5,7 +5,12 @@ export default Ember.Component.extend({
 
   init() {
     var shopTemp = this.get('shopTemp');
-    shopTemp.loadAllCategories(this.get('allCategories'));
+    var allCategories = this.get('allCategories');
+    var allAisles = this.get('allAisles');
+    if (allCategories)
+      shopTemp.loadAllCategories(this.get('allCategories'));
+    if (allAisles)
+      shopTemp.loadAllAisles(this.get('allAisles'));
     this._super();
   },
 
@@ -13,8 +18,8 @@ export default Ember.Component.extend({
     findOrCreateCategory(dropdown, event) {
       if (event.keyCode !== 13) { return; }
       let categoryName = event.target.value;
-      if (categoryName.length > 0 && this.get('allCategories').indexOf(categoryName) === -1) {
-        // create new temp category and add it to the aisleCategories
+      var shopTemp = this.get('shopTemp');
+      if (categoryName.length > 0 && shopTemp.get('allCategories').indexOf(categoryName) === -1) {
         var params = {
           name: categoryName
         }

@@ -64,7 +64,6 @@ export default Ember.Component.extend({
     },
 
     createTempCategory(params) {
-      console.log('in admin-forms component');
       this.sendAction('createTempCategory', params);
     },
 

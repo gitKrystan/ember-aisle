@@ -34,6 +34,8 @@ export default Ember.Route.extend({
       }).then(function() {
         brand.get('shops').addObject(newShop);
         brand.save();
+        shopTemp.set('tempCategories', []);
+        shopTemp.set('tempAisles', []);
       });
     },
 
@@ -54,7 +56,6 @@ export default Ember.Route.extend({
     createTempAisle(params) {
       var tempAisle = this.store.createRecord('aisle', params);
       this.get('shopTemp').addTempAisle(tempAisle);
-      console.log('in route')
     },
 
     createProduct(params) {
