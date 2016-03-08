@@ -19,6 +19,13 @@
     <label for="shopAddress">Address</label>
     {{input value=shopAddress class="form-control"}}
   </div>
+
+  {{new-aisle
+    allCategories=newShopCategories
+    createTempCategory='createTempCategory'
+    createTempAisle='createTempAisle'
+  }}
+
   <div class="form-group">
     <button {{action "createShop"}} class="btn btn-primary">Create Shop</button>
   </div>

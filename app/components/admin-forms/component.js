@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   showBrandForm: false,
-  showShopForm: false,
+  showShopForm: true,
   showEditShop: false,
   showNewCategoryForm: false,
   showNewProductForm: false,
@@ -61,6 +61,15 @@ export default Ember.Component.extend({
 
     createShop(params) {
       this.sendAction('createShop', params);
+    },
+
+    createTempCategory(params) {
+      console.log('in admin-forms component');
+      this.sendAction('createTempCategory', params);
+    },
+
+    createTempAisle(params) {
+      this.sendAction('createTempAisle', params);
     },
 
     createCategory(params) {

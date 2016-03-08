@@ -7,4 +7,4 @@ export function nameList(params/*, hash*/) {
   return nameList;
 }
 
-export default Ember.Helper.helper(categoryList);
+export default Ember.Helper.helper(nameList);

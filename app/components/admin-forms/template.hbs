@@ -5,7 +5,12 @@
 
 <button {{action "showShopForm"}} class="btn btn-block btn-default">Create Shop</button>
 {{#if showShopForm}}
-  {{new-shop brands=brands createShop="createShop"}}
+  {{new-shop
+    brands=brands
+    createShop="createShop"
+    createTempCategory='createTempCategory'
+    createTempAisle='createTempAisle'
+  }}
 {{/if}}
 
 <button {{action "showEditShop"}} class="btn btn-block btn-default">Edit Shop</button>
