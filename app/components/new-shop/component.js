@@ -17,10 +17,12 @@ export default Ember.Component.extend({
         address: this.get('shopAddress') || ''
       };
       this.sendAction('createShop', params);
+      this.set('currentBrand', null);
+      this.set('shopName', '');
+      this.set('shopAddress', '');
     },
 
     createTempCategory(params) {
-      console.log('in new-shop component');
       this.sendAction('createTempCategory', params);
     },
 

@@ -12,6 +12,10 @@ export default Ember.Service.extend({
     this.set('allCategories', categories);
   },
 
+  loadAllAisles(aisles) {
+    this.set('allAisles', aisles);
+  },
+
   addTempCategory(category) {
     this.get('allCategories').addObject(category);
     this.get('tempCategories').addObject(category);
@@ -19,7 +23,6 @@ export default Ember.Service.extend({
   },
 
   addTempAisle(aisle) {
-    console.log('in service')
     this.get('allAisles').addObject(aisle);
     this.get('tempAisles').addObject(aisle);
   }
