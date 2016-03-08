@@ -29,6 +29,10 @@ export default Ember.Component.extend({
       }
     },
 
+    setCurrentShop(shop) {
+      this.sendAction('setCurrentShop', shop);
+    },
+
     showEditShop() {
       if (this.get('showEditShop') === false) {
         this.set('showEditShop', true);

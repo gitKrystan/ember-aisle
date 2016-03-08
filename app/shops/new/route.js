@@ -6,7 +6,8 @@ export default Ember.Route.extend({
   model() {
     return Ember.RSVP.hash({
       brands: this.store.findAll('brand'),
-      shops: this.store.findAll('shop')
+      shops: this.store.findAll('shop'),
+      categories: this.store.findAll('category'),
     });
   },
 
@@ -44,27 +45,13 @@ export default Ember.Route.extend({
       this.get('shopTemp').addTempCategory(tempCategory);
     },
 
-    createCategory(params) {
-      var newCategory = this.store.createRecord('category', params);
-      var aisle = params.aisle;
-      aisle.get('categories').addObject(newCategory);
-      newCategory.save().then(function() {
-        aisle.save();
-      });
-    },
-
     createTempAisle(params) {
       var tempAisle = this.store.createRecord('aisle', params);
       this.get('shopTemp').addTempAisle(tempAisle);
     },
 
-    createProduct(params) {
-      var newProduct = this.store.createRecord('product', params);
-      var category = params.category;
-      category.get('categories').addObject(newProduct);
-      newProduct.save().then(function() {
-        category.save();
-      });
-    },
+    setCurrentShop(shop) {
+      this.transitionTo('shops.edit', shop.get('id'))
+    }
   }
 });

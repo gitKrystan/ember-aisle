@@ -3,17 +3,6 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   shopTemp: Ember.inject.service(),
 
-  init() {
-    var shopTemp = this.get('shopTemp');
-    var allCategories = this.get('allCategories');
-    var allAisles = this.get('allAisles');
-    if (allCategories)
-      shopTemp.loadAllCategories(this.get('allCategories'));
-    if (allAisles)
-      shopTemp.loadAllAisles(this.get('allAisles'));
-    this._super();
-  },
-
   actions: {
     findOrCreateCategory(dropdown, event) {
       if (event.keyCode !== 13) { return; }
