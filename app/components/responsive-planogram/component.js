@@ -63,6 +63,7 @@ export default Ember.Component.extend({
         layout: $(go.GridLayout)
       });
 
+      //TODO: Autopopulate this object with store's aisles.
       myPalette.model = new go.GraphLinksModel([
         { key: "produce", color: "white"},
         { key: "meat", color: "white" },
