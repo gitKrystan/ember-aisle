@@ -20,23 +20,9 @@
   {{#power-select
     selected=currentShop
     options=shops
-    onchange=(action (mut currentShop))
+    onchange=(action 'setCurrentShop')
     as |shop|
   }}
     {{shop.name}}
   {{/power-select}}
-  <button {{action "showNewAisleForm"}} class="btn btn-default">New Aisle</button>
-  {{#if showNewAisleForm}}
-    {{new-aisle shop=currentShop}}
-  {{/if}}
-
-  <button {{action "showNewCategoryForm"}} class="btn btn-default">New Category</button>
-  {{#if showNewCategoryForm}}
-    {{new-category shop=currentShop}}
-  {{/if}}
-
-  <button {{action "showNewProductForm"}} class="btn btn-default">New Product</button>
-  {{#if showNewProductForm}}
-    {{new-product shop=currentShop}}
-  {{/if}}
 {{/if}}

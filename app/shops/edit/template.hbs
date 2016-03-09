@@ -1,0 +1,10 @@
+<h3>Edit {{model.shop.brand.name}}: {{model.shop.name}}</h3>
+{{new-shop
+  brands=model.brands
+  shop=model.shop
+  allAisles=model.aisles
+  allCategories=model.categories
+  updateShop="updateShop"
+  createTempCategory='createTempCategory'
+  createTempAisle='createTempAisle'
+}}
