@@ -33,7 +33,9 @@ export default Ember.Route.extend({
     updateShop(shop, params) {
       var shopTemp = this.get('shopTemp');
       var existingBrand = shop.get('brand');
+      var existingAisles = shop.get('aisles');
       var newAisles = shopTemp.get('tempAisles');
+      var aislesToRemove = shopTemp.get('aislesToRemove');
 
       Object.keys(params).forEach(function(key) {
         var param = params[key];
@@ -42,9 +44,14 @@ export default Ember.Route.extend({
         }
       });
 
-      shop.get('aisles').addObjects(newAisles);
+      existingAisles.addObjects(newAisles);
+      existingAisles.removeObjects(aislesToRemove);
 
       shop.save().then(function() {
+        aislesToRemove.forEach(function(aisle) {
+          aisle.destroyRecord();
+        });
+
         newAisles.forEach(function(aisle) {
           var categories = aisle.get('categories');
           aisle.save().then(function() {
@@ -64,7 +71,6 @@ export default Ember.Route.extend({
             });
           }
         });
-
       }).then(function() {
         shopTemp.set('tempCategories', []);
         shopTemp.set('tempAisles', []);
