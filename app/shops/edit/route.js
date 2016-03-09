@@ -16,7 +16,6 @@ export default Ember.Route.extend({
       categories: []
     }).then(function(modelHash) {
       var aisles = modelHash.aisles;
-      var modelHash = modelHash;
       aisles.forEach(function(aisle) {
         modelHash.categories.addObjects(aisle.get('categories'));
         shopTemp.loadAisle(aisle);
@@ -32,15 +31,53 @@ export default Ember.Route.extend({
 
   actions: {
     updateShop(shop, params) {
+      var shopTemp = this.get('shopTemp');
+      var existingBrand = shop.get('brand');
+      var existingAisles = shop.get('aisles');
+      var newAisles = shopTemp.get('tempAisles');
+      var aislesToRemove = shopTemp.get('aislesToRemove');
+
       Object.keys(params).forEach(function(key) {
         var param = params[key];
         if(param !== undefined) {
           shop.set(key, param);
         }
       });
-      shop.save();
+
+      existingAisles.addObjects(newAisles);
+      existingAisles.removeObjects(aislesToRemove);
+
+      shop.save().then(function() {
+        aislesToRemove.forEach(function(aisle) {
+          aisle.destroyRecord();
+        });
+
+        newAisles.forEach(function(aisle) {
+          var categories = aisle.get('categories');
+          aisle.save().then(function() {
+            categories.forEach(function(category) {
+              category.save();
+            });
+          });
+        });
+      }).then(function() {
+        existingBrand.then(function(existingBrand) {
+          var newBrand = params.brand;
+          if (newBrand !== existingBrand) {
+            existingBrand.get('shops').removeObject(shop);
+            newBrand.get('shops').addObject(shop);
+            existingBrand.save().then(function(newBrand) {
+              return newBrand.save();
+            });
+          }
+        });
+      }).then(function() {
+        shopTemp.set('tempCategories', []);
+        shopTemp.set('tempAisles', []);
+      });
+
       this.transitionTo('shops');
-      // TODO: add and remove aisles
+      // TODO: remove aisles
     },
 
     createTempCategory(params) {

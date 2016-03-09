@@ -7,6 +7,7 @@ export default Ember.Service.extend({
 
   allAisles: [],
   tempAisles: [],
+  aislesToRemove: [],
 
   clearAll() {
     this.set('allCategories', []);
@@ -33,5 +34,11 @@ export default Ember.Service.extend({
   addTempAisle(aisle) {
     this.get('allAisles').addObject(aisle);
     this.get('tempAisles').addObject(aisle);
+  },
+
+  removeAisle(aisle) {
+    this.get('allAisles').removeObject(aisle);
+    this.get('tempAisles').removeObject(aisle);
+    this.get('aislesToRemove').addObject(aisle);
   }
 });

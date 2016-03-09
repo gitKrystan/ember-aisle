@@ -11,7 +11,7 @@ export default Ember.Component.extend({
       if (categoryName.length > 0 && shopTemp.get('allCategories').indexOf(categoryName) === -1) {
         var params = {
           name: categoryName
-        }
+        };
         this.sendAction('createTempCategory', params);
       }
     },
@@ -26,6 +26,11 @@ export default Ember.Component.extend({
 
       this.set('aisleNumber', '');
       shopTemp.set('aisleCategories', []);
+    },
+
+    removeAisle(aisle) {
+      var shopTemp = this.get('shopTemp');
+      shopTemp.removeAisle(aisle);
     }
   }
 });
