@@ -16,8 +16,8 @@ export default Ember.Service.extend({
     this.set('tempAisles', []);
   },
 
-  loadAllAisles(aisles) {
-    this.set('allAisles', aisles);
+  loadAisle(aisle) {
+    this.get('allAisles').addObject(aisle);
   },
 
   loadAllCategories(categories) {

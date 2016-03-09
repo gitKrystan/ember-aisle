@@ -2,9 +2,9 @@
   <div class="form-group">
     <label for="shopBrand">Brand</label>
     {{#power-select
-      selected=currentBrand
+      selected=shopBrand
       options=brands
-      onchange=(action (mut currentBrand))
+      onchange=(action (mut shopBrand))
       as |brand|
     }}
       {{brand.name}}
@@ -12,7 +12,7 @@
   </div>
   <div class="form-group">
     <label for="shopName">Name</label>
-    {{input value=shopName class="form-control"}}
+    {{input value=shopName class="form-control" placeholder="Shop Name"}}
   </div>
   <div class="form-group">
     <label for="shopAddress">Address</label>
@@ -27,6 +27,10 @@
   }}
 
   <div class="form-group">
-    <button {{action "createShop"}} class="btn btn-primary">Create Shop</button>
+    {{#if shop}}
+      <button {{action "updateShop" shop}} class="btn btn-primary">Update Shop</button>
+    {{else}}
+      <button {{action "createShop"}} class="btn btn-primary">Create Shop</button>
+    {{/if}}
   </div>
 </form>
