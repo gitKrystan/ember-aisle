@@ -1,8 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  shopTemp: Ember.inject.service(),
+  
   showBrandForm: false,
-  showShopForm: true,
+  showShopForm: false,
   showEditShop: false,
   showNewCategoryForm: false,
   showNewProductForm: false,
@@ -20,6 +22,7 @@ export default Ember.Component.extend({
     },
 
     showShopForm() {
+      this.get('shopTemp').clearAll();
       if (this.get('showShopForm') === false) {
         this.set('showShopForm', true);
         this.set('showEditShop', false);

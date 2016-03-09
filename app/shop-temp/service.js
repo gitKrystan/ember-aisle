@@ -8,6 +8,14 @@ export default Ember.Service.extend({
   allAisles: [],
   tempAisles: [],
 
+  clearAll() {
+    this.set('allCategories', []);
+    this.set('tempCategories', []);
+    this.set('aisleCategories', []);
+    this.set('allAisles', []);
+    this.set('tempAisles', []);
+  },
+
   loadAllAisles(aisles) {
     this.set('allAisles', aisles);
   },
