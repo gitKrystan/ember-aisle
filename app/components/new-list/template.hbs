@@ -1,0 +1,55 @@
+<h3>{{shop.brand.name}}: {{shop.name}}</h3>
+<p>
+  {{shop.address}}
+</p>
+
+<label for="productToAdd">Add A Product to Your List</label>
+{{#power-select
+  options=products
+  placeholder="Enter Products"
+  searchField="name"
+  onchange=(action (mut listTemp.listProducts))
+  onkeydown=(action 'findOrCreateProduct')
+  as |product|
+}}
+  {{product.name}}
+{{/power-select}}
+
+
+<h2>Shop Aisles</h2>
+<ul>
+  {{#each shopAisles as |aisle|}}
+    <li>
+      {{aisle.number}}: {{name-list aisle.categories}}
+    </li>
+  {{/each}}
+</ul>
+
+
+<h2>Shop Categories</h2>
+<ul>
+  {{#each shopCategories as |category|}}
+    <li>{{category.name}}</li>
+  {{/each}}
+</ul>
+
+<h2>All Products</h2>
+<ul>
+  {{#each products as |product|}}
+    <li>{{product.name}}</li>
+  {{/each}}
+</ul>
+
+<h2>Shop Products</h2>
+<ul>
+  {{#each shopProducts as |product|}}
+    <li>{{product.name}}</li>
+  {{/each}}
+</ul>
+
+<h2>List Products</h2>
+<ul>
+  {{#each listProducts as |product|}}
+    <li>{{product.name}}</li>
+  {{/each}}
+</ul>

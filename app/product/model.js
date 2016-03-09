@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-  category: DS.belongsTo('category', {async: true}),
-  list: DS.belongsTo('list', {async: true}),
+  category: DS.hasMany('category', {async: true}),
+  lists: DS.hasMany('list', {async: true, inverse: 'products'}),
   name: DS.attr('string')
 });

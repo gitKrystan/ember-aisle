@@ -1,7 +1,4 @@
-<ul>
-  {{#each model as |shop|}}
-    {{#link-to 'lists.new' shop.id}}
-      <li>{{shop.brand.name}}: {{shop.name}}</li>
-    {{/link-to}}
-  {{/each}}
-</ul>
+{{shop-list
+  shops=model
+  newList='newList'
+}}
