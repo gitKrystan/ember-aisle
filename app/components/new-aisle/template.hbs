@@ -13,12 +13,18 @@
         </div>
 
         <div class="col-sm-9 aisle-inline-form-col">
-          <label for="aisleCategories">Categories</label>
+          <label for="aisleCategories">
+            Categories
+            <span class="help-block">
+              {{categoryAlert}}
+            </span>
+          </label>
+
           <div class="input-group">
             {{#power-select-multiple
-              options=shopTemp.allCategories
+              options=shopTemp.availableCategories
               selected=shopTemp.aisleCategories
-              placeholder="Select Categories"
+              placeholder="Enter Categories"
               searchField="name"
               onchange=(action (mut shopTemp.aisleCategories))
               onkeydown=(action 'findOrCreateCategory')

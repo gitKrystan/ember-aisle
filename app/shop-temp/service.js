@@ -1,18 +1,20 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
-  allCategories: [],
   tempCategories: [],
   aisleCategories: [],
+  availableCategories: [],
+  usedCategories: [],
+  allCategories: Ember.computed.uniq('tempCategories', 'aisleCategories', 'availableCategories', 'usedCategories'),
 
   allAisles: [],
   tempAisles: [],
   aislesToRemove: [],
 
   clearAll() {
-    this.set('allCategories', []);
     this.set('tempCategories', []);
     this.set('aisleCategories', []);
+    this.set('availableCategories', []);
     this.set('allAisles', []);
     this.set('tempAisles', []);
   },
@@ -22,11 +24,10 @@ export default Ember.Service.extend({
   },
 
   loadAllCategories(categories) {
-    this.set('allCategories', categories);
+    this.set('usedCategories', categories);
   },
 
   addTempCategory(category) {
-    this.get('allCategories').addObject(category);
     this.get('tempCategories').addObject(category);
     this.get('aisleCategories').addObject(category);
   },
@@ -37,6 +38,7 @@ export default Ember.Service.extend({
   },
 
   removeAisle(aisle) {
+    this.get('availableCategories').addObjects(aisle.get('categories'));
     this.get('allAisles').removeObject(aisle);
     this.get('tempAisles').removeObject(aisle);
     this.get('aislesToRemove').addObject(aisle);
