@@ -26,6 +26,11 @@ export default Ember.Component.extend({
 
       this.set('aisleNumber', '');
       shopTemp.set('aisleCategories', []);
+    },
+
+    removeAisle(aisle) {
+      var shopTemp = this.get('shopTemp');
+      shopTemp.removeAisle(aisle);
     }
   }
 });
