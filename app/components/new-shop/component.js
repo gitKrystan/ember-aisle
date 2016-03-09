@@ -27,6 +27,7 @@ export default Ember.Component.extend({
     },
 
     updateShop(shop) {
+      var shopTemp = this.get('shopTemp');
       var params = {
         brand: this.get('shopBrand'),
         name: this.get('shopName'),

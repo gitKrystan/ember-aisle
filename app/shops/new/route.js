@@ -19,7 +19,6 @@ export default Ember.Route.extend({
 
     createShop(params) {
       var shopTemp = this.get('shopTemp');
-      var tempCategories = shopTemp.get('tempCategories');
       var tempAisles = shopTemp.get('tempAisles');
       var brand = params.brand;
       var newShop = this.store.createRecord('shop', params);
@@ -29,9 +28,9 @@ export default Ember.Route.extend({
           aisle.save().then(function() {
             categories.forEach(function(category) {
               category.save();
-            })
-          })
-        })
+            });
+          });
+        });
       }).then(function() {
         brand.get('shops').addObject(newShop);
         brand.save();
@@ -51,7 +50,7 @@ export default Ember.Route.extend({
     },
 
     setCurrentShop(shop) {
-      this.transitionTo('shops.edit', shop.get('id'))
+      this.transitionTo('shops.edit', shop.get('id'));
     }
   }
 });
