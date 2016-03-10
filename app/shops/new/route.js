@@ -51,6 +51,6 @@ export default Ember.Route.extend({
 
     setCurrentShop(shop) {
       this.transitionTo('shops.edit', shop.get('id'));
-    }
+    },
   }
 });
