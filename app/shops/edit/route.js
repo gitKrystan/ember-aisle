@@ -49,7 +49,13 @@ export default Ember.Route.extend({
 
       shop.save().then(function() {
         aislesToRemove.forEach(function(aisle) {
-          aisle.destroyRecord();
+          var categories = aisle.get('categories');
+          var categoryDeletions = categories.map(function(category) {
+            return category.destroyRecord();
+          });
+          Ember.RSVP.all(categoryDeletions).then(function() {
+            return aisle.destroyRecord();
+          });
         });
 
         newAisles.forEach(function(aisle) {
