@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  editLayout: false,
   layout: {},
   didInsertElement: function() {
 
@@ -25,7 +26,6 @@ export default Ember.Component.extend({
 
     //setup grid for snapping, dragging, dropping aisles, etc.
     var element = document.getElementsByClassName('grid-snap')[0];
-    console.log(element.parentNode.parentNode);
     interact('.grid-snap')
       .draggable({
         snap: {
@@ -130,9 +130,18 @@ export default Ember.Component.extend({
   actions: {
     exportLayout() {
       var params = {
-        layoutAisles: this.get('layout')
+        layoutAisles: this.get('layout'),
+        shop: this.get('shop')
       }
       this.sendAction('exportLayout', params);
+    },
+
+    editLayout() {
+      if ($("#hiddenWrapper").is(":visible")) {
+        $("#hiddenWrapper").hide();
+      } else {
+        $("#hiddenWrapper").show();
+      }
     }
   }
 });

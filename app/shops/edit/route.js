@@ -80,6 +80,15 @@ export default Ember.Route.extend({
       // TODO: remove aisles
     },
 
+    exportLayout(params) {
+      var newLayout = this.store.createRecord('layout', params);
+      var layoutShop = params.shop;
+      layoutShop.set('layout', newLayout);
+      newLayout.save().then(function() {
+        layoutShop.save();
+      });
+    },
+
     createTempCategory(params) {
       var tempCategory = this.store.createRecord('category', params);
       this.get('shopTemp').addTempCategory(tempCategory);
