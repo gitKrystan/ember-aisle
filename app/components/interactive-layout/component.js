@@ -14,7 +14,12 @@ export default Ember.Component.extend({
                           <button type='button' class='deleteAisle'>X</button>\
                           <div class='aisle-info'>\
                             <h4>\
-                              "+aisleID+"\
+                              <input\
+                               class='form-control' \
+                               type='number'\
+                               style='z-index:999'\
+                               value="+aisleID+">\
+                              </input>\
                             </h4>\
                           </div>\
                         </div>\
@@ -92,7 +97,7 @@ export default Ember.Component.extend({
       };
 
       function updateLayout (event) {
-        console.log(event.target.style);
+        console.log(event);
         _this.get('layout')[event.target.id] = {
           dataX: event.target.getAttribute('data-x'),
           dataY: event.target.getAttribute('data-y'),
@@ -116,7 +121,12 @@ export default Ember.Component.extend({
                               <button type='button' class='deleteAisle'>X</button>\
                               <div class='aisle-info'>\
                                 <h4>\
-                                  "+aisleID+"\
+                                  <input\
+                                   class='form-control' \
+                                   type='number'\
+                                   style='z-index:999'\
+                                   value="+aisleID+">\
+                                  </input>\
                                 </h4>\
                               </div>\
                             </div>\

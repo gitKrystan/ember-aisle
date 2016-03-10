@@ -19,6 +19,9 @@
   .aisle-info {
     display: inline-block;
     position: relative;
+    overflow: hidden;
+    word-wrap: break-word;
+    text-align: center;
   }
 }
 

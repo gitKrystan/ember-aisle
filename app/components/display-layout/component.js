@@ -8,85 +8,31 @@ export default Ember.Component.extend({
     var zIndex = 500;
     var aisleID = 1;
     var container = $('#grid-container');
-    var newElement = container.append("<div class='grid-wrapper'>\
-                        <div class='grid-snap' id='"+aisleID+"'>\
-                          <div class='aisle-info'>\
-                            <h4>\
-                              <input\
-                               class='form-control' \
-                               type='number'\
-                               style='z-index:999'\
-                               value="+aisleID+">\
-                              </input>\
-                            </h4>\
-                          </div>\
-                        </div>\
-                      </div>");
 
-    //setup grid for snapping, dragging, dropping aisles, etc.
-    var element = document.getElementsByClassName('grid-snap')[0];
-    interact('.grid-snap')
-      .draggable({
-        snap: {
-          targets: [
-            interact.createSnapGrid({ x: 30, y: 30 })
-          ],
-          range: 300,
-          relativePoints: [ { x: 0, y: 0 } ]
-        },
-        inertia: false,
-        restrict: {
-          restriction: element.parentNode.parentNode,
-          elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
-          endOnly: false
-        },
-        onmove: dragMoveListener
-      })
-      .resizable({
-        preserveAspectRatio: false,
-        edges: { left: true, right: true, bottom: true, top: true }
-      })
-      .on('mousedown', function (event) {
-        var target = event.target;
-        zIndex += 1;
-        target.style.zIndex = zIndex;
-      })
-      .on('resizemove', function (event) {
-        var target = event.target,
-            x = (parseFloat(target.getAttribute('data-x')) || 0),
-            y = (parseFloat(target.getAttribute('data-y')) || 0);
+    function placeAisle(layoutAisle, element) {
+      var x = layoutAisle.dataX;
+      var y = layoutAisle.dataY;
 
-          // update the element's style
-          target.style.width  = (Math.round(event.rect.width / 30) * 30) + 'px';
-          target.style.height = (Math.round(event.rect.height / 30) * 30) + 'px';
+      // update the element's style
+      element.style.width  = layoutAisle.width
+      element.style.height = layoutAisle.height
 
-          // translate when resizing from top or left edges
-          x += (Math.round(event.deltaRect.left / 30) * 30);
-          y += (Math.round(event.deltaRect.top / 30) * 30);
+      element.style.webkitTransform = element.style.transform =
+          'translate(' + x + 'px,' + y + 'px)';
 
-          target.style.webkitTransform = target.style.transform =
-              'translate(' + x + 'px,' + y + 'px)';
-
-          target.setAttribute('data-x', x);
-          target.setAttribute('data-y', y);
-      })
-
-      function dragMoveListener (event) {
-        var target = event.target,
-            // keep the dragged position in the data-x/data-y attributes
-            x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-            y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-
-        // translate the element
-        target.style.webkitTransform =
-        target.style.transform =
-          'translate(' + x + 'px, ' + y + 'px)';
-
-        // update the posiion attributes
-        target.setAttribute('data-x', x);
-        target.setAttribute('data-y', y);
-      };
-
-      window.dragMoveListener = dragMoveListener;
+      element.setAttribute('data-x', x);
+      element.setAttribute('data-y', y);
     }
+
+    (this.get('layout').get('layoutAisles')).forEach(function(layoutAisle) {
+      console.log(layoutAisle)
+      var newElement = $("<div class='grid-wrapper'>\
+                          <div class='grid-snap'>\
+                            <div class='aisle-info'>\
+                            </div>\
+                          </div>\
+                        </div>").appendTo(container);
+      placeAisle(layoutAisle, newElement.children().first()[0]);
+    });
+  }
 });
