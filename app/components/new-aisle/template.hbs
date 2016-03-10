@@ -3,46 +3,51 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="row">
-        <div class="col-sm-3 aisle-inline-form-col">
-          <label for="aisleNumber">Aisle #</label>
-          {{input
-            value=aisleNumber
-            class="form-control"
-            placeholder="#"
-          }}
-        </div>
-
-        <div class="col-sm-9 aisle-inline-form-col">
-          <label for="aisleCategories">
-            Categories
-            <span class="help-block">
-              {{categoryAlert}}
-            </span>
-          </label>
-
-          <div class="input-group">
-            {{#power-select-multiple
-              options=shopTemp.availableCategories
-              selected=shopTemp.aisleCategories
-              placeholder="Enter Categories"
-              searchField="name"
-              onchange=(action (mut shopTemp.aisleCategories))
-              onkeydown=(action 'findOrCreateCategory')
-              as |category|
-            }}
-              {{category.name}}
-            {{/power-select-multiple}}
-            <div class="input-group-btn">
-              <button type="button" {{action 'createTempAisle'}} class="btn btn-primary">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
         <div class="col-sm-12">
           <table class="table table-hover">
+            <tr>
+              <th class="col-sm-1">
+                <label for="aisleNumber">Aisle</label>
+              </th>
+              <th class="col-sm-10">
+                <label for="aisleCategories">
+                  Categories
+                  <span class="help-block">
+                    {{categoryAlert}}
+                  </span>
+                </label>
+              </th>
+              <th class="col-sm-1">
+
+              </th>
+            </tr>
+            <tr>
+              <td>
+                {{input
+                  value=aisleNumber
+                  class="form-control"
+                  placeholder="#"
+                }}
+              </td>
+              <td>
+                {{#power-select-multiple
+                  options=shopTemp.availableCategories
+                  selected=shopTemp.aisleCategories
+                  placeholder="Enter Categories"
+                  searchField="name"
+                  onchange=(action (mut shopTemp.aisleCategories))
+                  onkeydown=(action 'findOrCreateCategory')
+                  as |category|
+                }}
+                  {{category.name}}
+                {{/power-select-multiple}}
+              </td>
+              <td>
+                <button type="button" {{action 'createTempAisle'}} class="btn btn-primary">
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
+              </td>
+            </tr>
             <tbody>
               {{#each shopTemp.allAisles as |aisle|}}
                 <tr>
@@ -53,7 +58,7 @@
                     {{name-list aisle.categories}}
                   </td>
                   <td>
-                    <button type="button" {{action 'removeAisle' aisle}} class="btn btn-xs btn-danger">
+                    <button type="button" {{action 'removeAisle' aisle}} class="btn btn-danger">
                       <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     </button>
                   </td>

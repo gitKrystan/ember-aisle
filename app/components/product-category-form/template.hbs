@@ -1,0 +1,10 @@
+<h3>{{productName}}</h3>
+{{#power-select
+  options=categories
+  placeholder="Choose a Category"
+  searchField="name"
+  onchange=(action 'selectAction')
+  as |category|
+}}
+  {{category.name}}
+{{/power-select}}

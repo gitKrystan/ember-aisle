@@ -7,6 +7,7 @@ export default Ember.Component.extend({
         name: this.get('brandName')
       };
       this.sendAction('createBrand', params);
+      this.set('brandName', '');
     }
   }
 });

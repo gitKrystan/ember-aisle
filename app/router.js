@@ -10,6 +10,7 @@ Router.map(function() {
     this.route('new', {path: '/'});
     this.route('edit', {path: '/:shop_id'});
   });
+  this.route('lists', {path: 'lists/:list_id'}, function() {});
   this.route('show-layout');
 });
 
