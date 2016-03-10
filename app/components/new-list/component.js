@@ -27,9 +27,16 @@ export default Ember.Component.extend({
     return products;
   }),
 
-  categoryAlert: '',
+  productCategoryFormIsShowing: false,
+  newProductName: '',
+  productAlert: '',
 
   actions: {
+    addProductToList(product) {
+      var list = this.get('list');
+      this.sendAction('addProductToList', product, list);
+    },
+
     findOrCreateProduct(dropdown, event) {
       if (event.keyCode !== 13) { return; }
       var component = this;
@@ -42,11 +49,8 @@ export default Ember.Component.extend({
           .mapBy('name').indexOf(productName) === -1;
         var isEmpty = productName.length === 0;
         if (!isEmpty && isUnique) {
-          var params = {
-            lists: [component.get('list')],
-            name: productName
-          };
-          component.sendAction('createProductAndAddToList', params);
+          component.set('newProductName', productName);
+          component.set('productCategoryFormIsShowing', true);
         } else if (isEmpty) {
           return;
         } else {
@@ -54,5 +58,10 @@ export default Ember.Component.extend({
         }
       });
     },
+
+    createProductAndAddToList(params) {
+      this.sendAction('createProductAndAddToList', params);
+      this.set('productCategoryFormIsShowing', false);
+    }
   }
 });

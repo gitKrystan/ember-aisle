@@ -13,12 +13,29 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    createProductAndAddToList(params) {
-      var list = params.lists[0];
-      var newProduct = this.store.createRecord('product', params);
-      newProduct.save().then(function() {
-        list.get('products').addObject(newProduct);
+    addProductToList(product, list) {
+      product.get('lists').addObject(list);
+      product.save().then(function() {
+        list.get('products').addObject(product);
         list.save();
+      });
+    },
+
+    createProductAndAddToList(params) {
+      var newProduct = this.store.createRecord('product', params);
+      var list = params.lists[0];
+      list.get('products').addObject(newProduct);
+      var category = params.categories[0];
+      category.get('products').addObject(newProduct);
+      newProduct.save().then(function() {
+        list.save().catch(error => {
+          console.log('error saving list:' + error.errors);
+        });
+        category.save().catch(error => {
+          console.log('error saving category:' + error.errors);
+        });
+      }).catch(error => {
+        console.log('error saving product:' + error.errors);
       });
     }
   }

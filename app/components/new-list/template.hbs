@@ -8,13 +8,21 @@
   options=products
   placeholder="Enter Products"
   searchField="name"
-  onchange=(action (mut listTemp.listProducts))
+  onchange=(action 'addProductToList')
   onkeydown=(action 'findOrCreateProduct')
   as |product|
 }}
   {{product.name}}
 {{/power-select}}
 
+{{#if productCategoryFormIsShowing}}
+  {{product-category-form
+    productName=newProductName
+    shopCategories=shopCategories
+    list=list
+    createProductAndAddToList='createProductAndAddToList'
+  }}
+{{/if}}
 
 <h2>Shop Aisles</h2>
 <ul>
@@ -50,6 +58,8 @@
 <h2>List Products</h2>
 <ul>
   {{#each listProducts as |product|}}
-    <li>{{product.name}}</li>
+    <li>
+      {{product.name}}: {{product.categories}}
+    </li>
   {{/each}}
 </ul>
