@@ -1,7 +1,4 @@
-{{interactive-layout exportLayout="exportLayout"}}
+{{new-layout exportLayout="exportLayout"}}
 {{#each model as |layout|}}
-{{log layout}}
-  {{#each layout.layoutAisles as |aisle|}}
-    {{aisle}}
-  {{/each}}
+  {{display-layout layout=layout}}
 {{/each}}

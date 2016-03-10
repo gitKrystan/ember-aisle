@@ -37,7 +37,7 @@ export default Ember.Component.extend({
           targets: [
             interact.createSnapGrid({ x: 30, y: 30 })
           ],
-          range: Infinity,
+          range: 300,
           relativePoints: [ { x: 0, y: 0 } ]
         },
         inertia: false,
@@ -77,7 +77,7 @@ export default Ember.Component.extend({
           target.setAttribute('data-y', y);
       })
       .on('dragend', function(event) {
-        updateLayout(event.target);
+        updateLayout(event);
       });
 
       function dragMoveListener (event) {
@@ -96,8 +96,18 @@ export default Ember.Component.extend({
         target.setAttribute('data-y', y);
       };
 
-      function updateLayout (target) {
-        _this.get('layout')[target.id] = target;
+      function updateLayout (event) {
+        console.log(event);
+        _this.get('layout')[event.target.id] = {
+          dataX: event.target.getAttribute('data-x'),
+          dataY: event.target.getAttribute('data-y'),
+          height: event.target.style.height,
+          snap: event.snap,
+          transform: event.target.style.transform,
+          webkitTransform: event.target.style.webkitTransform,
+          width: event.target.style.width,
+          zIndex: event.target.style.zIndex
+        };
       }
 
       window.dragMoveListener = dragMoveListener;
