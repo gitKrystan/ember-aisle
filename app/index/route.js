@@ -7,12 +7,13 @@ export default Ember.Route.extend({
 
   actions: {
     newList(params) {
-      console.log('index')
-      var route = this;
+      var shop = params.shop;
       var newList = this.store.createRecord('list', params);
+      shop.get('lists').addObject(newList);
       newList.save().then(function() {
-        route.transitionTo('lists', newList.id);
+        return shop.save();
       });
+      this.transitionTo('lists', newList.id);
     }
   }
 });

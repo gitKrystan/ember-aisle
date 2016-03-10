@@ -10,9 +10,7 @@ Router.map(function() {
     this.route('new', {path: '/'});
     this.route('edit', {path: '/:shop_id'});
   });
-  this.route('lists', {path: 'lists/:list_id'}, function() {
-    this.route('new', {path: '/new/:shop_id2'});
-  });
+  this.route('lists', {path: 'lists/:list_id'}, function() {});
 });
 
 export default Router;

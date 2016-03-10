@@ -68,11 +68,12 @@ export default Ember.Route.extend({
         });
       }).then(function() {
         existingBrand.then(function(existingBrand) {
+          debugger
           var newBrand = params.brand;
           if (newBrand !== existingBrand) {
             existingBrand.get('shops').removeObject(shop);
             newBrand.get('shops').addObject(shop);
-            existingBrand.save().then(function(newBrand) {
+            existingBrand.save().then(function() {
               return newBrand.save();
             });
           }

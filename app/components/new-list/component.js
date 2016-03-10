@@ -2,29 +2,10 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   listProducts: Ember.computed('list', function() {
-    return this.get('list').get('products');
-  }),
-  shop: Ember.computed('list', function() {
-    return this.get('list').get('shop');
-  }),
-  shopAisles: Ember.computed('shop', function() {
-    return this.get('shop').get('aisles');
-  }),
-  shopCategories: Ember.computed('shopAisles', function() {
-    var aisles = this.get('shopAisles');
-    var categories = [];
-    aisles.forEach(function(aisle) {
-      categories.addObjects(aisle.get('categories'));
-    });
-    return categories;
-  }),
-  shopProducts: Ember.computed('shopCategories', function() {
-    var categories = this.get('shopCategories');
-    var products = [];
-    categories.forEach(function(category) {
-      products.addObjects(category.get('products'));
-    });
-    return products;
+    var products = this.get('list').get('products');
+    products.forEach(function(product) {
+      
+    })
   }),
 
   productCategoryFormIsShowing: false,

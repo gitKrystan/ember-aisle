@@ -26,9 +26,12 @@
 
 <h2>Shop Aisles</h2>
 <ul>
-  {{#each shopAisles as |aisle|}}
+  {{#each aisles as |aisle|}}
     <li>
-      {{aisle.number}}: {{name-list aisle.categories}}
+      {{aisle.number}}:
+      {{#each aisle.categories as |category|}}
+        <span class="category-name">{{category.name}}</span>
+      {{/each}}
     </li>
   {{/each}}
 </ul>
@@ -36,7 +39,7 @@
 
 <h2>Shop Categories</h2>
 <ul>
-  {{#each shopCategories as |category|}}
+  {{#each categories as |category|}}
     <li>{{category.name}}</li>
   {{/each}}
 </ul>
@@ -59,7 +62,10 @@
 <ul>
   {{#each listProducts as |product|}}
     <li>
-      {{product.name}}: {{product.categories}}
+      {{product.name}}:
+      {{#each product.categories as |category|}}
+        <span class="category-name">{{category.name}}</span>
+      {{/each}}
     </li>
   {{/each}}
 </ul>
