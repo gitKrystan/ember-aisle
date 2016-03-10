@@ -8,7 +8,7 @@
   options=products
   placeholder="Enter Products"
   searchField="name"
-  onchange=(action 'addProductToList')
+  onchange=(action 'addProductToListOrCategorize')
   onkeydown=(action 'findOrCreateProduct')
   as |product|
 }}
@@ -18,9 +18,12 @@
 {{#if productCategoryFormIsShowing}}
   {{product-category-form
     productName=newProductName
-    shopCategories=shopCategories
+    currentProduct=currentProduct
+    categories=categories
     list=list
+    action=productCategoryFormAction
     createProductAndAddToList='createProductAndAddToList'
+    categorizeProductAndAddToList='categorizeProductAndAddToList'
   }}
 {{/if}}
 

@@ -3,19 +3,33 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   listProducts: Ember.computed('list', function() {
     var products = this.get('list').get('products');
-    products.forEach(function(product) {
-      
-    })
+    return products
+    // var productList = [];
+    // products.forEach(function(product) {
+    //
+    // })
   }),
 
   productCategoryFormIsShowing: false,
+  productCategoryFormAction: '',
   newProductName: '',
+  currentProduct: null,
   productAlert: '',
 
   actions: {
-    addProductToList(product) {
+    addProductToListOrCategorize(product) {
       var list = this.get('list');
-      this.sendAction('addProductToList', product, list);
+      var shopCategories = this.get('categories');
+      var productCategories = product.get('categories');
+      var intersectingCategory = Ember.computed
+        .intersect(shopCategories, productCategories)[0];
+      if (intersectingCategory) {
+        this.sendAction('addProductToList', product, list)
+      } else {
+        this.set('currentProduct', product);
+        this.set('productCategoryFormAction', 'categorizeProductAndAddToList');
+        this.set('productCategoryFormIsShowing', true);
+      }
     },
 
     findOrCreateProduct(dropdown, event) {
@@ -31,6 +45,7 @@ export default Ember.Component.extend({
         var isEmpty = productName.length === 0;
         if (!isEmpty && isUnique) {
           component.set('newProductName', productName);
+          component.set('productCategoryFormAction', 'createProductAndAddToList');
           component.set('productCategoryFormIsShowing', true);
         } else if (isEmpty) {
           return;
@@ -42,6 +57,11 @@ export default Ember.Component.extend({
 
     createProductAndAddToList(params) {
       this.sendAction('createProductAndAddToList', params);
+      this.set('productCategoryFormIsShowing', false);
+    },
+
+    categorizeProductAndAddToList(product, category, list) {
+      this.sendAction('categorizeProductAndAddToList', product, category, list);
       this.set('productCategoryFormIsShowing', false);
     }
   }

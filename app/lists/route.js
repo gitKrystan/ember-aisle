@@ -73,6 +73,25 @@ export default Ember.Route.extend({
       }).catch(error => {
         console.log('error saving product:' + error.errors);
       });
+    },
+
+    categorizeProductAndAddToList(product, category, list) {
+      return Ember.RSVP.Promise.all([
+        category.get('products'),
+        list.get('products'),
+        product.get('categories'),
+        product.get('lists')
+      ]).then(function(resolvedPromiseArray) {
+        resolvedPromiseArray[0].addObject(product);
+        resolvedPromiseArray[1].addObject(product);
+        resolvedPromiseArray[2].addObject(category);
+        resolvedPromiseArray[3].addObject(list);
+        return Ember.RSVP.Promise.all([
+          category.save(),
+          list.save(),
+          product.save()
+        ])
+      })
     }
   }
 });
