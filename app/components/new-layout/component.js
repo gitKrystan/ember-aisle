@@ -9,38 +9,36 @@ export default Ember.Component.extend({
     var _this = this;
     var zIndex = 500;
     var aisleID = 1;
+    var yPos = (parseInt(this.get('aisles').get('length')) * 30) - 30;
     var container = $('#grid-container');
     console.log(this.get('aisles'));
     (this.get('aisles')).forEach(function(aisle) {
       var nameArray = aisle.get('categories').mapBy('name');
       var nameList = nameArray.join(', ');
-      var newElement = container.append("<div class='grid-wrapper'>\
+      var newElement = $("<div class='grid-wrapper'>\
                           <div class='grid-snap' id='"+aisle.get('number')+"'>\
-                            <button type='button' class='deleteAisle'>X</button>\
                             <div class='aisle-info'>\
-                              <h4>\
+                              <h5>\
                                 "+aisle.get('number')+' '+nameList+"\
-                              </h4>\
+                              </h5>\
                             </div>\
                           </div>\
-                        </div>");
-      $(newElement).children().children().children('.deleteAisle').bind('click', function() {
-        $(this).parent().parent().remove();
-      })
+                        </div>").appendTo(container);
+      zIndex--;
+      $(newElement).children()[0].style.height = "30px"
+      $(newElement).children()[0].style.webkitTransform =
+      $(newElement).children()[0].style.transform =
+          'translate(' + 0 + 'px,' + yPos + 'px)';
+      $(newElement).children()[0].style.zIndex = zIndex
+      $(newElement).children()[0].setAttribute('data-x', 0);
+      $(newElement).children()[0].setAttribute('data-y', yPos);
+      yPos -= 30;
     })
 
     //setup grid for snapping, dragging, dropping aisles, etc.
     var element = document.getElementsByClassName('grid-snap')[0];
     interact('.grid-snap')
       .draggable({
-        snap: {
-          targets: [
-            interact.createSnapGrid({ x: 30, y: 30 })
-          ],
-          range: 300,
-          relativePoints: [ { x: 0, y: 0 } ]
-        },
-        inertia: false,
         restrict: {
           restriction: element.parentNode.parentNode,
           elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
@@ -63,18 +61,19 @@ export default Ember.Component.extend({
             y = (parseFloat(target.getAttribute('data-y')) || 0);
 
           // update the element's style
-          target.style.width  = (Math.round(event.rect.width / 30) * 30) + 'px';
-          target.style.height = (Math.round(event.rect.height / 30) * 30) + 'px';
+          target.style.width  = (Math.round(event.rect.width / 15) * 15) + 'px';
+          target.style.height = (Math.round(event.rect.height / 15) * 15) + 'px';
 
           // translate when resizing from top or left edges
-          x += (Math.round(event.deltaRect.left / 30) * 30);
-          y += (Math.round(event.deltaRect.top / 30) * 30);
+          x += (Math.round(event.deltaRect.left / 15) * 15);
+          y += (Math.round(event.deltaRect.top / 15) * 15);
 
           target.style.webkitTransform = target.style.transform =
               'translate(' + x + 'px,' + y + 'px)';
 
           target.setAttribute('data-x', x);
           target.setAttribute('data-y', y);
+          updateLayout(event);
       })
       .on('dragend', function(event) {
         updateLayout(event);
@@ -97,39 +96,20 @@ export default Ember.Component.extend({
       };
 
       function updateLayout (event) {
-        console.log(event.target.style);
+        console.log(event.target.outerText);
         _this.get('layout')[event.target.id] = {
           dataX: event.target.getAttribute('data-x'),
           dataY: event.target.getAttribute('data-y'),
           height: event.target.style.height,
-          snap: event.snap,
           transform: event.target.style.transform,
           webkitTransform: event.target.style.webkitTransform,
           width: event.target.style.width,
-          zIndex: event.target.style.zIndex
+          zIndex: event.target.style.zIndex,
+          catString: event.target.outerText
         };
       }
 
       window.dragMoveListener = dragMoveListener;
-
-      //setup proper jquery bindings to add and remove aisles from the page
-      $('.addAisle').on('click', function(event) {
-        aisleID++;
-        var container = $('#grid-container');
-        var newElement = container.append("<div class='grid-wrapper'>\
-                            <div class='grid-snap' id='"+aisleID+"'>\
-                              <button type='button' class='deleteAisle'>X</button>\
-                              <div class='aisle-info'>\
-                                <h4>\
-                                  "+aisleID+"\
-                                </h4>\
-                              </div>\
-                            </div>\
-                          </div>");
-        $(newElement).children().children().children('.deleteAisle').bind('click', function() {
-          $(this).parent().parent().remove();
-        })
-      });
   },
 
   actions: {

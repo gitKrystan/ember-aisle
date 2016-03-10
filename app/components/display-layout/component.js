@@ -23,12 +23,12 @@ export default Ember.Component.extend({
       element.setAttribute('data-x', x);
       element.setAttribute('data-y', y);
     }
-
+    // console.log("layoutAisle should be: " + (this.get('layout').get('firstObject').get('layoutAisles')));
     (this.get('layout').get('firstObject').get('layoutAisles')).forEach(function(layoutAisle) {
-      console.log(layoutAisle)
       var newElement = $("<div class='grid-wrapper'>\
                           <div class='grid-snap'>\
                             <div class='aisle-info'>\
+                              <h5>"+layoutAisle.catString+"</h5>\
                             </div>\
                           </div>\
                         </div>").appendTo(container);

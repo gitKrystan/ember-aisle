@@ -5,7 +5,7 @@ module.exports = function(environment) {
     modulePrefix: 'aisle',
     environment: environment,
     contentSecurityPolicy: { 'connect-src': "'self' https://auth.firebase.com wss://*.firebaseio.com" },
-    firebase: 'https://ember-aisle.firebaseio.com/',
+    firebase: 'https://ember-aisle-test.firebaseio.com/',
     baseURL: '/',
     locationType: 'auto',
     EmberENV: {
