@@ -1,1 +1,7 @@
-{{interactive-layout}}
+{{interactive-layout exportLayout="exportLayout"}}
+{{#each model as |layout|}}
+{{log layout}}
+  {{#each layout.layoutAisles as |aisle|}}
+    {{aisle}}
+  {{/each}}
+{{/each}}

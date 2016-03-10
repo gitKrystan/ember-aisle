@@ -1,10 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  layout: {},
   didInsertElement: function() {
 
     //add one aisle to the page on load
-    var layout = {};
+    var _this = this;
     var zIndex = 500;
     var aisleID = 1;
     var container = $('#grid-container');
@@ -96,9 +97,7 @@ export default Ember.Component.extend({
       };
 
       function updateLayout (target) {
-        console.log(target);
-        layout[target.id] = target;
-        console.log(layout);
+        _this.get('layout')[target.id] = target;
       }
 
       window.dragMoveListener = dragMoveListener;
@@ -129,5 +128,11 @@ export default Ember.Component.extend({
   },
 
   actions: {
+    exportLayout() {
+      var params = {
+        layoutAisles: this.get('layout')
+      }
+      this.sendAction('exportLayout', params);
+    }
   }
 });
