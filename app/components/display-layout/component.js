@@ -24,7 +24,7 @@ export default Ember.Component.extend({
       element.setAttribute('data-y', y);
     }
 
-    (this.get('layout').get('layoutAisles')).forEach(function(layoutAisle) {
+    (this.get('layout').get('firstObject').get('layoutAisles')).forEach(function(layoutAisle) {
       console.log(layoutAisle)
       var newElement = $("<div class='grid-wrapper'>\
                           <div class='grid-snap'>\

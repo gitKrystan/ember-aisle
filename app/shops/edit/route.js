@@ -13,6 +13,10 @@ export default Ember.Route.extend({
         orderBy: 'shop',
         equalTo: shopID
       }),
+      layout: this.store.query('layout', {
+        orderBy: 'shop',
+        equalTo: shopID
+      }),
       categories: []
     }).then(function(modelHash) {
       var aisles = modelHash.aisles;
