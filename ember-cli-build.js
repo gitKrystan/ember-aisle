@@ -6,7 +6,8 @@ module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     // Add options here
   });
-  app.import('vendor/GoJS2/release/go-debug.js');
+  // app.import('vendor/GoJS2/release/go-debug.js');
+
   // Use `app.import` to add additional libraries to the generated
   // output files.
   //

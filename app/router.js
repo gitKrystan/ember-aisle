@@ -10,6 +10,7 @@ Router.map(function() {
     this.route('new', {path: '/'});
     this.route('edit', {path: '/:shop_id'});
   });
+  this.route('show-layout');
 });
 
 export default Router;
