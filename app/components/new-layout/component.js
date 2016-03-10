@@ -10,18 +10,23 @@ export default Ember.Component.extend({
     var zIndex = 500;
     var aisleID = 1;
     var container = $('#grid-container');
-    var newElement = container.append("<div class='grid-wrapper'>\
-                        <div class='grid-snap' id='"+aisleID+"'>\
-                          <button type='button' class='deleteAisle'>X</button>\
-                          <div class='aisle-info'>\
-                            <h4>\
-                              "+aisleID+"\
-                            </h4>\
+    console.log(this.get('aisles'));
+    (this.get('aisles')).forEach(function(aisle) {
+      var nameArray = aisle.get('categories').mapBy('name');
+      var nameList = nameArray.join(', ');
+      var newElement = container.append("<div class='grid-wrapper'>\
+                          <div class='grid-snap' id='"+aisle.get('number')+"'>\
+                            <button type='button' class='deleteAisle'>X</button>\
+                            <div class='aisle-info'>\
+                              <h4>\
+                                "+aisle.get('number')+' '+nameList+"\
+                              </h4>\
+                            </div>\
                           </div>\
-                        </div>\
-                      </div>");
-    $(newElement).children().children().children('.deleteAisle').bind('click', function() {
-      $(this).parent().parent().remove();
+                        </div>");
+      $(newElement).children().children().children('.deleteAisle').bind('click', function() {
+        $(this).parent().parent().remove();
+      })
     })
 
     //setup grid for snapping, dragging, dropping aisles, etc.
