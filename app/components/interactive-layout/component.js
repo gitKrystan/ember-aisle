@@ -30,7 +30,6 @@ export default Ember.Component.extend({
 
     //setup grid for snapping, dragging, dropping aisles, etc.
     var element = document.getElementsByClassName('grid-snap')[0];
-    console.log(element.parentNode.parentNode);
     interact('.grid-snap')
       .draggable({
         snap: {
@@ -97,7 +96,6 @@ export default Ember.Component.extend({
       };
 
       function updateLayout (event) {
-        console.log(event);
         _this.get('layout')[event.target.id] = {
           dataX: event.target.getAttribute('data-x'),
           dataY: event.target.getAttribute('data-y'),

@@ -11,7 +11,7 @@ export default Ember.Component.extend({
     var aisleID = 1;
     var yPos = (parseInt(this.get('aisles').get('length')) * 30) - 30;
     var container = $('#grid-container');
-    console.log(this.get('aisles'));
+    
     (this.get('aisles')).forEach(function(aisle) {
       var nameArray = aisle.get('categories').mapBy('name');
       var nameList = nameArray.join(', ');
@@ -107,16 +107,16 @@ export default Ember.Component.extend({
       };
 
       function updateLayout (event) {
-        console.log(event.target.outerText);
-        _this.get('layout')[event.target.id] = {
-          dataX: event.target.getAttribute('data-x'),
-          dataY: event.target.getAttribute('data-y'),
-          height: event.target.style.height,
-          transform: event.target.style.transform,
-          webkitTransform: event.target.style.webkitTransform,
-          width: event.target.style.width,
-          zIndex: event.target.style.zIndex,
-          catString: event.target.outerText
+        var target = event.target;
+        _this.get('layout')[target.id] = {
+          dataX: target.getAttribute('data-x'),
+          dataY: target.getAttribute('data-y'),
+          height: target.style.height,
+          transform: target.style.transform,
+          webkitTransform: target.style.webkitTransform,
+          width: target.style.width,
+          zIndex: target.style.zIndex,
+          catString: target.outerText
         };
       }
 

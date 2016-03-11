@@ -98,10 +98,8 @@ export default Ember.Route.extend({
     },
 
     updateLayout(params) {
-      console.log(params.layout);
       this.store.findRecord('layout', params.layout.get('firstObject').get('id'))
       .then(function(layout) {
-        console.log(params.layoutAisles)
         layout.set('layoutAisles', params.layoutAisles)
         layout.save();
       });

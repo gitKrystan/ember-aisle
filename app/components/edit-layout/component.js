@@ -10,7 +10,6 @@ export default Ember.Component.extend({
     var zIndex = 500;
     var aisleID = 1;
     var container = $('#grid-container');
-    console.log(this.get('aisles'));
     function placeAisle(layoutAisle, element) {
       var x = layoutAisle.dataX;
       var y = layoutAisle.dataY;
@@ -25,7 +24,7 @@ export default Ember.Component.extend({
       element.setAttribute('data-x', x);
       element.setAttribute('data-y', y);
     }
-    // console.log("layoutAisle should be: " + (this.get('layout').get('firstObject').get('layoutAisles')));
+
     (this.get('layout').get('firstObject').get('layoutAisles')).forEach(function(layoutAisle) {
       var newElement = $("<div class='grid-wrapper'>\
                           <div class='grid-snap' id='"+aisleID+"'>\
@@ -98,16 +97,16 @@ export default Ember.Component.extend({
       };
 
       function updateLayout (event) {
-        console.log(event.target.outerText);
-        _this.get('tempLayout')[event.target.id] = {
-          dataX: event.target.getAttribute('data-x'),
-          dataY: event.target.getAttribute('data-y'),
-          height: event.target.style.height,
-          transform: event.target.style.transform,
-          webkitTransform: event.target.style.webkitTransform,
-          width: event.target.style.width,
-          zIndex: event.target.style.zIndex,
-          catString: event.target.outerText
+        var target = event.target
+        _this.get('tempLayout')[target.id] = {
+          dataX: target.getAttribute('data-x'),
+          dataY: target.getAttribute('data-y'),
+          height: target.style.height,
+          transform: target.style.transform,
+          webkitTransform: target.style.webkitTransform,
+          width: target.style.width,
+          zIndex: target.style.zIndex,
+          catString: target.outerText
         };
       }
 
