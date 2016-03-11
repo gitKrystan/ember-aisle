@@ -27,58 +27,25 @@
   }}
 {{/if}}
 
-<h2>The Real Deal</h2>
-{{#each listEntries as |entry|}}
-  <li>
-    {{entry.aisleNumber}}:
-    {{#each entry.categories as |category|}}
-      <span class="category-name">{{category.categoryName}}</span>
-
-      {{#each category.products as |product|}}
-        {{product.name}}
+<h3>My List</h3>
+<ul class="list-group">
+  {{#each listEntries as |entry|}}
+    <li class="list-group-item">
+      <h4>
+        {{entry.aisleNumber}}:
+        {{#each entry.categories as |category|}}
+          <span class="category-name">{{category.categoryName}}</span>
+        {{/each}}
+      </h4>
+      {{#each entry.categories as |category|}}
+        {{#each category.products as |product|}}
+        <div class="checkbox">
+          <label>
+            {{input type='checkbox'}} {{product.name}}
+          </label>
+        </div>
+        {{/each}}
       {{/each}}
-    {{/each}}
-  </li>
-{{/each}}
-
-<h2>Shop Aisles</h2>
-<ul>
-  {{#each aisles as |aisle|}}
-    <li>
-      {{aisle.number}}:
-      {{#each aisle.categories as |category|}}
-        <span class="category-name">{{category.name}}</span>
-      {{/each}}
-    </li>
-  {{/each}}
-</ul>
-
-<h2>Shop Categories</h2>
-<ul>
-  {{#each categories as |category|}}
-    <li>{{category.name}}</li>
-  {{/each}}
-</ul>
-
-<h2>All Products</h2>
-<ul>
-  {{#each products as |product|}}
-    <li>{{product.name}}</li>
-  {{/each}}
-</ul>
-
-<h2>Shop Products</h2>
-<ul>
-  {{#each shopProducts as |product|}}
-    <li>{{product.name}}</li>
-  {{/each}}
-</ul>
-
-<h2>List Products</h2>
-<ul>
-  {{#each listProducts as |product|}}
-    <li>
-      {{product.name}}
     </li>
   {{/each}}
 </ul>

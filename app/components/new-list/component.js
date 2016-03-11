@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import _ from 'underscore';
 
 export default Ember.Component.extend({
   init() {
@@ -17,10 +18,10 @@ export default Ember.Component.extend({
       promises.push(product.get('categories'));
     });
 
-    Ember.RSVP.all(promises).then(function(allProductCategories) {
+    Ember.RSVP.allSettled(promises).then(function(allProductCategories) {
       for (var productIndex = 0; productIndex < listProducts.get('length'); productIndex++) {
         var product = listProducts.objectAt(productIndex);
-        var productCategories = allProductCategories.objectAt(productIndex);
+        var productCategories = allProductCategories.objectAt(productIndex).value;
 
         var shopCategoryNames = shopCategories.mapBy('name');
         var productCategoryNames = productCategories.mapBy('name');
@@ -91,10 +92,11 @@ export default Ember.Component.extend({
   actions: {
     addProductToListOrCategorize(product) {
       var list = this.get('list');
-      var shopCategories = this.get('categories');
-      var productCategories = product.get('categories');
-      var intersectingCategory = Ember.computed
-        .intersect(shopCategories, productCategories)[0];
+      var shopCategories = this.get('categories').mapBy('name');
+      var productCategories = product.get('categories').mapBy('name');
+
+
+      var intersectingCategory = _.intersection(shopCategories, productCategories)[0];
       if (intersectingCategory) {
         this.sendAction('addProductToList', product, list);
       } else {

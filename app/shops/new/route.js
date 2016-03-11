@@ -34,8 +34,7 @@ export default Ember.Route.extend({
       }).then(function() {
         brand.get('shops').addObject(newShop);
         brand.save();
-        shopTemp.set('tempCategories', []);
-        shopTemp.set('tempAisles', []);
+        shopTemp.clearAll();
       });
     },
 
