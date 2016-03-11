@@ -65,10 +65,7 @@
 <ul>
   {{#each listProducts as |product|}}
     <li>
-      {{product.name}}:
-      {{#each product.categories as |category|}}
-        <span class="category-name">{{category.name}}</span>
-      {{/each}}
+      {{product.name}}: {{product.category.name}}
     </li>
   {{/each}}
 </ul>

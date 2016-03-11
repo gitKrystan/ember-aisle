@@ -1,13 +1,26 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  listProducts: Ember.computed('list', function() {
-    var products = this.get('list').get('products');
-    return products
-    // var productList = [];
-    // products.forEach(function(product) {
-    //
-    // })
+  listProducts: Ember.computed('list', 'categories', function() {
+    var listProducts = this.get('list').get('products');
+    var shopCategories = this.get('categories');
+
+    var productListWithShopCategory = [];
+    listProducts.forEach(function(product) {
+      product.get('categories').then(function(productCategories) {
+        var shopCategoryNames = shopCategories.mapBy('name');
+
+        var matchedCategory = productCategories.find(function(category) {
+          return shopCategoryNames.contains(category.get('name'));
+        });
+
+        productListWithShopCategory.addObject({
+          name: product.get('name'),
+          category: matchedCategory
+        });
+      });
+    });
+    return productListWithShopCategory;
   }),
 
   productCategoryFormIsShowing: false,
