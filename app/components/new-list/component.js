@@ -96,12 +96,14 @@ export default Ember.Component.extend({
       var shopCategories = this.get('categories').mapBy('name');
       var productCategories = product.get('categories').mapBy('name');
 
-
       var intersectingCategory = _.intersection(shopCategories, productCategories)[0];
       if (intersectingCategory) {
         this.sendAction('addProductToList', product, list);
+        this.set('currentProduct', product);
+        this.set('productName', product.get('name'));
       } else {
         this.set('currentProduct', product);
+        this.set('productName', product.get('name'));
         this.set('productCategoryFormAction', 'categorizeProductAndAddToList');
         this.set('productCategoryFormIsShowing', true);
       }
