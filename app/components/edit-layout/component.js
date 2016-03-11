@@ -121,6 +121,11 @@ export default Ember.Component.extend({
         shop: this.get('shop'),
         layout: this.get('layout')
       }
+      if ($("#hiddenWrapper").is(":visible")) {
+        $("#hiddenWrapper").hide();
+      } else {
+        $("#hiddenWrapper").show();
+      }
       this.sendAction('updateLayout', params);
     },
 
