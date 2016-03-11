@@ -1,8 +1,10 @@
+<h3>Add Brands</h3>
 <button {{action "showBrandForm"}} class="btn btn-block btn-default">Create Brand</button>
 {{#if showBrandForm}}
   {{new-brand createBrand="createBrand"}}
 {{/if}}
 
+<h3>Add Shops</h3>
 <button {{action "showShopForm"}} class="btn btn-block btn-default">Create Shop</button>
 {{#if showShopForm}}
   {{new-shop
