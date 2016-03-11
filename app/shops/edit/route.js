@@ -13,6 +13,10 @@ export default Ember.Route.extend({
         orderBy: 'shop',
         equalTo: shopID
       }),
+      layout: this.store.query('layout', {
+        orderBy: 'shop',
+        equalTo: shopID
+      }),
       categories: []
     }).then(function(modelHash) {
       var aisles = modelHash.aisles;
@@ -93,6 +97,16 @@ export default Ember.Route.extend({
       layoutShop.set('layout', newLayout);
       newLayout.save().then(function() {
         layoutShop.save();
+      });
+    },
+
+    updateLayout(params) {
+      console.log(params.layout);
+      this.store.findRecord('layout', params.layout.get('firstObject').get('id'))
+      .then(function(layout) {
+        console.log(params.layoutAisles)
+        layout.set('layoutAisles', params.layoutAisles)
+        layout.save();
       });
     },
 

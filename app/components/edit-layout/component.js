@@ -2,38 +2,40 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   editLayout: false,
-  layout: {},
+  tempLayout: {},
   didInsertElement: function() {
 
     //add one aisle to the page on load
     var _this = this;
     var zIndex = 500;
     var aisleID = 1;
-    var yPos = (parseInt(this.get('aisles').get('length')) * 30) - 30;
     var container = $('#grid-container');
     console.log(this.get('aisles'));
-    (this.get('aisles')).forEach(function(aisle) {
-      var nameArray = aisle.get('categories').mapBy('name');
-      var nameList = nameArray.join(', ');
+    function placeAisle(layoutAisle, element) {
+      var x = layoutAisle.dataX;
+      var y = layoutAisle.dataY;
+
+      // update the element's style
+      element.style.width  = layoutAisle.width
+      element.style.height = layoutAisle.height
+
+      element.style.webkitTransform = element.style.transform =
+          'translate(' + x + 'px,' + y + 'px)';
+
+      element.setAttribute('data-x', x);
+      element.setAttribute('data-y', y);
+    }
+    // console.log("layoutAisle should be: " + (this.get('layout').get('firstObject').get('layoutAisles')));
+    (this.get('layout').get('firstObject').get('layoutAisles')).forEach(function(layoutAisle) {
       var newElement = $("<div class='grid-wrapper'>\
-                          <div class='grid-snap' id='"+aisle.get('number')+"'>\
+                          <div class='grid-snap' id='"+aisleID+"'>\
                             <div class='aisle-info'>\
-                              <h5>\
-                                "+aisle.get('number')+' '+nameList+"\
-                              </h5>\
+                              <h5>"+layoutAisle.catString+"</h5>\
                             </div>\
                           </div>\
                         </div>").appendTo(container);
-      zIndex--;
-      $(newElement).children()[0].style.height = "30px"
-      $(newElement).children()[0].style.webkitTransform =
-      $(newElement).children()[0].style.transform =
-          'translate(' + 0 + 'px,' + yPos + 'px)';
-      $(newElement).children()[0].style.zIndex = zIndex
-      $(newElement).children()[0].setAttribute('data-x', 0);
-      $(newElement).children()[0].setAttribute('data-y', yPos);
-      yPos -= 30;
-    })
+      placeAisle(layoutAisle, newElement.children().first()[0]);
+    });
 
     //setup grid for snapping, dragging, dropping aisles, etc.
     var element = document.getElementsByClassName('grid-snap')[0];
@@ -97,7 +99,7 @@ export default Ember.Component.extend({
 
       function updateLayout (event) {
         console.log(event.target.outerText);
-        _this.get('layout')[event.target.id] = {
+        _this.get('tempLayout')[event.target.id] = {
           dataX: event.target.getAttribute('data-x'),
           dataY: event.target.getAttribute('data-y'),
           height: event.target.style.height,
@@ -113,12 +115,13 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    exportLayout() {
+    updateLayout() {
       var params = {
-        layoutAisles: this.get('layout'),
-        shop: this.get('shop')
+        layoutAisles: this.get('tempLayout'),
+        shop: this.get('shop'),
+        layout: this.get('layout')
       }
-      this.sendAction('exportLayout', params);
+      this.sendAction('updateLayout', params);
     },
 
     editLayout() {

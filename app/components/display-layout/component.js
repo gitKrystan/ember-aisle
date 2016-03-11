@@ -23,16 +23,34 @@ export default Ember.Component.extend({
       element.setAttribute('data-x', x);
       element.setAttribute('data-y', y);
     }
-
-    (this.get('layout').get('layoutAisles')).forEach(function(layoutAisle) {
-      console.log(layoutAisle)
+    // console.log("layoutAisle should be: " + (this.get('layout').get('firstObject').get('layoutAisles')));
+    (this.get('layout').get('firstObject').get('layoutAisles')).forEach(function(layoutAisle) {
       var newElement = $("<div class='grid-wrapper'>\
                           <div class='grid-snap'>\
                             <div class='aisle-info'>\
+                              <h5>"+layoutAisle.catString+"</h5>\
                             </div>\
                           </div>\
                         </div>").appendTo(container);
       placeAisle(layoutAisle, newElement.children().first()[0]);
     });
+  },
+
+  actions: {
+    exportLayout() {
+      var params = {
+        layoutAisles: this.get('layout'),
+        shop: this.get('shop')
+      }
+      this.sendAction('exportLayout', params);
+    },
+
+    editLayout() {
+      if ($("#hiddenWrapper").is(":visible")) {
+        $("#hiddenWrapper").hide();
+      } else {
+        $("#hiddenWrapper").show();
+      }
+    }
   }
 });

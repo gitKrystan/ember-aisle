@@ -1,10 +1,14 @@
 .grid-snap {
+  h5 {
+    padding: 0px;
+  }
   min-width: 30px;
   min-height: 30px;
   width: 300px;
   height: 60px;
   background-color: white;
   border: 2px solid black;
+  box-sizing: border-box;
   color: black;
   font-size: 1.2em;
   border-radius: 4px;
@@ -17,11 +21,11 @@
     background: none;
   }
   .aisle-info {
-    display: inline-block;
     position: relative;
-    overflow: hidden;
-    word-wrap: break-word;
+    display: block;
     text-align: center;
+    float: none;
+    margin: 0 auto;
   }
 }
 
