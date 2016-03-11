@@ -1,30 +1,91 @@
 import Ember from 'ember';
+import _ from 'underscore';
 
 export default Ember.Component.extend({
-  listProducts: Ember.computed('list', 'categories', function() {
-    var listProducts = this.get('list').get('products');
+  init() {
+    this.getListEntries();
+    this._super();
+  },
+
+  shopCategoriesWithProducts(callback) {
+    var listProducts = this.get('listProducts');
     var shopCategories = this.get('categories');
 
-    var productListWithShopCategory = [];
+    var shopCategoriesWithProductsHash = {};
+
+    var promises = [];
     listProducts.forEach(function(product) {
-      product.get('categories').then(function(productCategories) {
-        var shopCategoryNames = shopCategories.mapBy('name');
-
-        var matchedCategory = productCategories.find(function(category) {
-          return shopCategoryNames.contains(category.get('name'));
-        });
-
-        productListWithShopCategory.addObject({
-          name: product.get('name'),
-          category: matchedCategory
-        });
-      });
+      promises.push(product.get('categories'));
     });
-    return productListWithShopCategory;
+
+    Ember.RSVP.allSettled(promises).then(function(allProductCategories) {
+      for (var productIndex = 0; productIndex < listProducts.get('length'); productIndex++) {
+        var product = listProducts.objectAt(productIndex);
+        var productCategories = allProductCategories.objectAt(productIndex).value;
+
+        var shopCategoryNames = shopCategories.mapBy('name');
+        var productCategoryNames = productCategories.mapBy('name');
+
+        var matchedCategoryName = productCategoryNames.find(function(name) {
+          return shopCategoryNames.contains(name);
+        });
+
+        if (matchedCategoryName in shopCategoriesWithProductsHash) {
+          shopCategoriesWithProductsHash[matchedCategoryName].addObject(product);
+        } else {
+          shopCategoriesWithProductsHash[matchedCategoryName] = [product];
+        }
+        console.log('in for loop:')
+        console.log(shopCategoriesWithProductsHash);
+      }
+      callback(shopCategoriesWithProductsHash);
+    });
+  },
+
+  listProducts: Ember.computed('list.products.@each.name', function() {
+    return this.get('list').get('products');
+  }),
+
+  getListEntries() {
+    var component = this;
+
+    this.shopCategoriesWithProducts(function(shopCategoriesWithProducts) {
+      var listEntries = [];
+      var aisles = component.get('aisles');
+      aisles.forEach(function(aisle) {
+        var aisleEntry = {};
+        aisleEntry['aisleID'] = aisle.get('id');
+        aisleEntry['aisleNumber'] = aisle.get('number');
+        aisleEntry['categories'] = [];
+        aisle.get('categories').then(function(categories) {
+          categories.forEach(function(category) {
+            var categoryEntry = {};
+            var categoryName = category.get('name');
+            console.log('in listEntries:')
+            console.log(shopCategoriesWithProducts);
+            categoryEntry['categoryID'] = category.get('id');
+            categoryEntry['categoryName'] = categoryName;
+            categoryEntry['products'] = shopCategoriesWithProducts[categoryName];
+            aisleEntry['categories'].addObject(categoryEntry);
+          });
+        });
+        listEntries.addObject(aisleEntry);
+      });
+
+      console.log(listEntries);
+      component.set('listEntries', listEntries);
+    });
+  },
+
+  listEntries: null,
+
+  listProductsObserver: Ember.observer('listProducts.@each.name', function() {
+    this.getListEntries();
   }),
 
   productCategoryFormIsShowing: false,
   productCategoryFormAction: '',
+  nonCategorizationElementsAreShowing: Ember.computed.not('productCategoryFormIsShowing'),
   newProductName: '',
   currentProduct: null,
   productAlert: '',
@@ -32,12 +93,13 @@ export default Ember.Component.extend({
   actions: {
     addProductToListOrCategorize(product) {
       var list = this.get('list');
-      var shopCategories = this.get('categories');
-      var productCategories = product.get('categories');
-      var intersectingCategory = Ember.computed
-        .intersect(shopCategories, productCategories)[0];
+      var shopCategories = this.get('categories').mapBy('name');
+      var productCategories = product.get('categories').mapBy('name');
+
+
+      var intersectingCategory = _.intersection(shopCategories, productCategories)[0];
       if (intersectingCategory) {
-        this.sendAction('addProductToList', product, list)
+        this.sendAction('addProductToList', product, list);
       } else {
         this.set('currentProduct', product);
         this.set('productCategoryFormAction', 'categorizeProductAndAddToList');

@@ -1,8 +1,10 @@
+<h3>Add Brands</h3>
 <button {{action "showBrandForm"}} class="btn btn-block btn-default">Create Brand</button>
 {{#if showBrandForm}}
   {{new-brand createBrand="createBrand"}}
 {{/if}}
 
+<h3>Add Shops</h3>
 <button {{action "showShopForm"}} class="btn btn-block btn-default">Create Shop</button>
 {{#if showShopForm}}
   {{new-shop
@@ -13,14 +15,15 @@
   }}
 {{/if}}
 
+<h3>Edit A Shop</h3>
 <button {{action "showEditShop"}} class="btn btn-block btn-default">Edit Shop</button>
 {{#if showEditShop}}
-  <h3>Edit Shop</h3>
   <label>Select a Shop</label>
   {{#power-select
     selected=currentShop
     options=shops
     onchange=(action 'setCurrentShop')
+    placeholder='Please select a shop to edit'
     as |shop|
   }}
     {{shop.name}}
