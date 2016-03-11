@@ -34,5 +34,23 @@ export default Ember.Component.extend({
                         </div>").appendTo(container);
       placeAisle(layoutAisle, newElement.children().first()[0]);
     });
+  },
+
+  actions: {
+    exportLayout() {
+      var params = {
+        layoutAisles: this.get('layout'),
+        shop: this.get('shop')
+      }
+      this.sendAction('exportLayout', params);
+    },
+
+    editLayout() {
+      if ($("#hiddenWrapper").is(":visible")) {
+        $("#hiddenWrapper").hide();
+      } else {
+        $("#hiddenWrapper").show();
+      }
+    }
   }
 });

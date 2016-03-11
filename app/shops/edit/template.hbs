@@ -9,7 +9,7 @@
   createTempAisle='createTempAisle'
 }}
 {{#if model.shop.layout}}
-  {{display-layout layout=model.layout}}
+  {{edit-layout updateLayout="updateLayout" shop=model.shop layout=model.layout}}
 {{else}}
   {{new-layout exportLayout="exportLayout" shop=model.shop aisles=model.aisles}}
 {{/if}}
