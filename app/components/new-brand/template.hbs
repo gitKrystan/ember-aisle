@@ -1,10 +1,16 @@
 <form>
   <div class="form-group">
     <label for="brandName">Name</label>
-    {{input value=brandName class="form-control"}}
+    {{input value=brandName class="form-control" placeholder="Brand Name"}}
   </div>
 
   <div class="form-group">
     <button {{action "createBrand"}} class="btn btn-success">Create Brand</button>
   </div>
 </form>
+{{#if brandSaved}}
+  <div class="alert alert-success alert-dismissible" role="alert">
+    <button {{action "dismissAlert"}} type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4>You have successfully saved your brand!</h4>
+  </div>
+{{/if}}
