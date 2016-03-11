@@ -85,6 +85,7 @@ export default Ember.Component.extend({
 
   productCategoryFormIsShowing: false,
   productCategoryFormAction: '',
+  nonCategorizationElementsAreShowing: Ember.computed.not('productCategoryFormIsShowing'),
   newProductName: '',
   currentProduct: null,
   productAlert: '',
