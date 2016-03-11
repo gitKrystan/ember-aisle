@@ -15,14 +15,15 @@
   }}
 {{/if}}
 
+<h3>Edit A Shop</h3>
 <button {{action "showEditShop"}} class="btn btn-block btn-default">Edit Shop</button>
 {{#if showEditShop}}
-  <h3>Edit Shop</h3>
   <label>Select a Shop</label>
   {{#power-select
     selected=currentShop
     options=shops
     onchange=(action 'setCurrentShop')
+    placeholder='Please select a shop to edit'
     as |shop|
   }}
     {{shop.name}}
