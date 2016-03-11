@@ -72,7 +72,6 @@ export default Ember.Route.extend({
         });
       }).then(function() {
         existingBrand.then(function(existingBrand) {
-          debugger
           var newBrand = params.brand;
           if (newBrand !== existingBrand) {
             existingBrand.get('shops').removeObject(shop);
@@ -83,12 +82,10 @@ export default Ember.Route.extend({
           }
         });
       }).then(function() {
-        shopTemp.set('tempCategories', []);
-        shopTemp.set('tempAisles', []);
+        shopTemp.clearAll();
       });
 
       this.transitionTo('shops');
-      // TODO: remove aisles
     },
 
     exportLayout(params) {
