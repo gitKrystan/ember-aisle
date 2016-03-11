@@ -1,11 +1,14 @@
+<br><br>
 <h3>Add Brands</h3>
-<button {{action "showBrandForm"}} class="btn btn-block btn-default">Create Brand</button>
+<button {{action "showBrandForm"}} class="btn btn-block btn-info btn-lg">Create Brand</button>
+<br><br>
 {{#if showBrandForm}}
   {{new-brand createBrand="createBrand"}}
 {{/if}}
 
 <h3>Add Shops</h3>
-<button {{action "showShopForm"}} class="btn btn-block btn-default">Create Shop</button>
+<button {{action "showShopForm"}} class="btn btn-block btn-success btn-lg">Create Shop</button>
+<br><br>
 {{#if showShopForm}}
   {{new-shop
     brands=brands
@@ -16,7 +19,8 @@
 {{/if}}
 
 <h3>Edit A Shop</h3>
-<button {{action "showEditShop"}} class="btn btn-block btn-default">Edit Shop</button>
+<button {{action "showEditShop"}} class="btn btn-block btn-primary btn-lg">Edit Shop</button>
+<br><br>
 {{#if showEditShop}}
   <label>Select a Shop</label>
   {{#power-select
