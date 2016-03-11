@@ -27,6 +27,20 @@
   }}
 {{/if}}
 
+<h2>The Real Deal</h2>
+{{#each listEntries as |entry|}}
+  <li>
+    {{entry.aisleNumber}}:
+    {{#each entry.categories as |category|}}
+      <span class="category-name">{{category.categoryName}}</span>
+
+      {{#each categories.products as |product|}}
+        {{product.name}}
+      {{/each}}
+    {{/each}}
+  </li>
+{{/each}}
+
 <h2>Shop Aisles</h2>
 <ul>
   {{#each aisles as |aisle|}}
@@ -38,7 +52,6 @@
     </li>
   {{/each}}
 </ul>
-
 
 <h2>Shop Categories</h2>
 <ul>
@@ -65,7 +78,7 @@
 <ul>
   {{#each listProducts as |product|}}
     <li>
-      {{product.name}}: {{product.category.name}}
+      {{product.name}}
     </li>
   {{/each}}
 </ul>

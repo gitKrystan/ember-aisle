@@ -1,26 +1,98 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  listProducts: Ember.computed('list', 'categories', function() {
-    var listProducts = this.get('list').get('products');
+  shopCategoriesWithProducts() {
+    var listProducts = this.get('listProducts');
     var shopCategories = this.get('categories');
 
-    var productListWithShopCategory = [];
+    var temp = {};
     listProducts.forEach(function(product) {
       product.get('categories').then(function(productCategories) {
         var shopCategoryNames = shopCategories.mapBy('name');
+        var productCategoryNames = productCategories.mapBy('name');
 
-        var matchedCategory = productCategories.find(function(category) {
-          return shopCategoryNames.contains(category.get('name'));
+        var matchedCategoryName = productCategoryNames.find(function(name) {
+          return shopCategoryNames.contains(name);
         });
 
-        productListWithShopCategory.addObject({
-          name: product.get('name'),
-          category: matchedCategory
-        });
+        if (matchedCategoryName in temp) {
+          temp[matchedCategoryName].addObject(product);
+        } else {
+          temp[matchedCategoryName] = [product];
+          console.log(temp)
+        }
       });
     });
-    return productListWithShopCategory;
+    return temp;
+  },
+
+  listProducts: Ember.computed('list.products.@each.name', function() {
+    return this.get('list').get('products');
+  }),
+
+  listEntries: Ember.computed('listProducts.@each.name', 'temp', function() {
+    var component = this;
+
+    return new Ember.RSVP.Promise(function(resolve) {
+      var shopCategoriesWithProducts = component.shopCategoriesWithProducts();
+      return shopCategoriesWithProducts;
+    }).then(function(shopCategoriesWithProducts) {
+      var listEntries = [];
+      var aisles = component.get('aisles');
+      aisles.forEach(function(aisle) {
+        var aisleEntry = {};
+        aisleEntry['aisleID'] = aisle.get('id');
+        aisleEntry['aisleNumber'] = aisle.get('number');
+        aisleEntry['categories'] = [];
+        aisle.get('categories').then(function(categories) {
+          categories.forEach(function(category) {
+            var categoryEntry = {};
+            var categoryName = category.get('name');
+            console.log(shopCategoriesWithProducts)
+            categoryEntry['categoryID'] = category.get('id');
+            categoryEntry['categoryName'] = categoryName;
+            categoryEntry['products'] = shopCategoriesWithProducts[categoryName];
+            aisleEntry['categories'].addObject(categoryEntry);
+          });
+        });
+        listEntries.addObject(aisleEntry);
+      })
+
+      console.log(listEntries);
+      return listEntries;
+    })
+
+
+
+
+    // setTimeout(function() {
+    //   var listEntries = [];
+    //   var temp = component.get('temp')
+    //
+    //   var aisles = component.get('aisles');
+    //   aisles.forEach(function(aisle) {
+    //     var aisleEntry = {};
+    //     aisleEntry['aisleID'] = aisle.get('id');
+    //     aisleEntry['aisleNumber'] = aisle.get('number');
+    //     aisleEntry['categories'] = [];
+    //     aisle.get('categories').then(function(categories) {
+    //       categories.forEach(function(category) {
+    //         var categoryEntry = {};
+    //         var categoryName = category.get('name');
+    //         categoryEntry['categoryID'] = category.get('id');
+    //         categoryEntry['categoryName'] = categoryName;
+    //         categoryEntry['products'] = temp[categoryName];
+    //         aisleEntry['categories'].addObject(categoryEntry);
+    //       });
+    //     });
+    //     listEntries.addObject(aisleEntry);
+    //   })
+
+    //   console.log(listEntries);
+    //   return listEntries;
+    // }, 1000)
+
+
   }),
 
   productCategoryFormIsShowing: false,
