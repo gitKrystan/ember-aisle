@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  brandSaved: false,
+
   actions: {
     createBrand() {
       var params = {
@@ -8,6 +10,11 @@ export default Ember.Component.extend({
       };
       this.sendAction('createBrand', params);
       this.set('brandName', '');
+      this.set('brandSaved', 'true');
+    },
+
+    dismissAlert() {
+      this.set('brandSaved', false);
     }
   }
 });

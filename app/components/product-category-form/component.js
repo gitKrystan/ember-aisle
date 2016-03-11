@@ -12,9 +12,11 @@ export default Ember.Component.extend({
           name: this.get('productName')
         };
         this.sendAction('createProductAndAddToList', params);
+        this.set('currentProduct', '');
       } else if (action === 'categorizeProductAndAddToList') {
         var product = this.get('currentProduct');
         this.sendAction('categorizeProductAndAddToList', product, category, list);
+        this.set('currentProduct', '');
       }
     }
   }

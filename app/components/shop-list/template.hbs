@@ -1,10 +1,14 @@
-<ul class="list-unstyled">
-  {{#each shops as |shop|}}
-    <li>
-      <button {{action 'newList' shop}} class="btn btn-link">
-        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-        Shop@ {{shop.brand.name}}: {{shop.name}}
-      </button>
-    </li>
-  {{/each}}
-</ul>
+{{#if shops}}
+  <ul class="list-unstyled">
+    {{#each shops as |shop|}}
+      <li>
+        <button {{action 'newList' shop}} class="btn btn-link shop-list-button">
+          <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+          Shop @ {{shop.brand.name}}: {{shop.name}}
+        </button>
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <h2>Please add a shop in the shop manager!</h2>
+{{/if}}

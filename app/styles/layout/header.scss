@@ -6,3 +6,41 @@
     letter-spacing: 1px;
   }
 }
+
+div.jumbotron {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.4),
+      rgba(0, 0, 0, 0.1),
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0)
+    ),
+    url(http://healthoholics.com/wp-content/uploads/2015/09/Blog-header-jan-6th.jpg);
+  background-size: cover;
+  color: $white;
+  padding-top: 20px;
+  padding-left: 20px;
+  min-height: 500px;
+
+  h1 {
+    font-size: 35px;
+    margin-top: 0;
+    margin-left: -30px;
+
+    font-family: $font-family-sans-serif;
+    font-weight: 100;
+    text-transform: uppercase;
+  }
+}
+
+.shop-list {
+  .shop-list-button {
+    font-size: 20px;
+    font-weight: 300;
+
+    span {
+      padding-right: 10px;
+    }
+  }
+}

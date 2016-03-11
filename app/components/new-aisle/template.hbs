@@ -33,7 +33,7 @@
                 {{#power-select-multiple
                   options=shopTemp.availableCategories
                   selected=shopTemp.aisleCategories
-                  placeholder="Enter Categories"
+                  placeholder="Type category then press enter to add"
                   searchField="name"
                   onchange=(action (mut shopTemp.aisleCategories))
                   onkeydown=(action 'findOrCreateCategory')
@@ -44,7 +44,8 @@
               </td>
               <td>
                 <button type="button" {{action 'createTempAisle'}} class="btn btn-primary">
-                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span>
+                  Save Aisle
                 </button>
               </td>
             </tr>
@@ -55,11 +56,14 @@
                     {{aisle.number}}
                   </td>
                   <td>
-                    {{name-list aisle.categories}}
+                    {{#each aisle.categories as |category|}}
+                      <span class="category-name">{{category.name}}</span>
+                    {{/each}}
                   </td>
                   <td>
                     <button type="button" {{action 'removeAisle' aisle}} class="btn btn-danger">
                       <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                      Remove Aisle
                     </button>
                   </td>
                 </tr>
