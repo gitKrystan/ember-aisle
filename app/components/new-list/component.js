@@ -1,13 +1,27 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  shopCategoriesWithProducts() {
+  init() {
+    this.getListEntries();
+    this._super();
+  },
+
+  shopCategoriesWithProducts(callback) {
     var listProducts = this.get('listProducts');
     var shopCategories = this.get('categories');
 
-    var temp = {};
+    var shopCategoriesWithProductsHash = {};
+
+    var promises = [];
     listProducts.forEach(function(product) {
-      product.get('categories').then(function(productCategories) {
+      promises.push(product.get('categories'));
+    });
+
+    Ember.RSVP.all(promises).then(function(allProductCategories) {
+      for (var productIndex = 0; productIndex < listProducts.get('length'); productIndex++) {
+        var product = listProducts.objectAt(productIndex);
+        var productCategories = allProductCategories.objectAt(productIndex);
+
         var shopCategoryNames = shopCategories.mapBy('name');
         var productCategoryNames = productCategories.mapBy('name');
 
@@ -15,28 +29,26 @@ export default Ember.Component.extend({
           return shopCategoryNames.contains(name);
         });
 
-        if (matchedCategoryName in temp) {
-          temp[matchedCategoryName].addObject(product);
+        if (matchedCategoryName in shopCategoriesWithProductsHash) {
+          shopCategoriesWithProductsHash[matchedCategoryName].addObject(product);
         } else {
-          temp[matchedCategoryName] = [product];
-          console.log(temp)
+          shopCategoriesWithProductsHash[matchedCategoryName] = [product];
         }
-      });
+        console.log('in for loop:')
+        console.log(shopCategoriesWithProductsHash);
+      }
+      callback(shopCategoriesWithProductsHash);
     });
-    return temp;
   },
 
   listProducts: Ember.computed('list.products.@each.name', function() {
     return this.get('list').get('products');
   }),
 
-  listEntries: Ember.computed('listProducts.@each.name', 'temp', function() {
+  getListEntries() {
     var component = this;
 
-    return new Ember.RSVP.Promise(function(resolve) {
-      var shopCategoriesWithProducts = component.shopCategoriesWithProducts();
-      return shopCategoriesWithProducts;
-    }).then(function(shopCategoriesWithProducts) {
+    this.shopCategoriesWithProducts(function(shopCategoriesWithProducts) {
       var listEntries = [];
       var aisles = component.get('aisles');
       aisles.forEach(function(aisle) {
@@ -48,7 +60,8 @@ export default Ember.Component.extend({
           categories.forEach(function(category) {
             var categoryEntry = {};
             var categoryName = category.get('name');
-            console.log(shopCategoriesWithProducts)
+            console.log('in listEntries:')
+            console.log(shopCategoriesWithProducts);
             categoryEntry['categoryID'] = category.get('id');
             categoryEntry['categoryName'] = categoryName;
             categoryEntry['products'] = shopCategoriesWithProducts[categoryName];
@@ -56,43 +69,17 @@ export default Ember.Component.extend({
           });
         });
         listEntries.addObject(aisleEntry);
-      })
+      });
 
       console.log(listEntries);
-      return listEntries;
-    })
+      component.set('listEntries', listEntries);
+    });
+  },
 
+  listEntries: null,
 
-
-
-    // setTimeout(function() {
-    //   var listEntries = [];
-    //   var temp = component.get('temp')
-    //
-    //   var aisles = component.get('aisles');
-    //   aisles.forEach(function(aisle) {
-    //     var aisleEntry = {};
-    //     aisleEntry['aisleID'] = aisle.get('id');
-    //     aisleEntry['aisleNumber'] = aisle.get('number');
-    //     aisleEntry['categories'] = [];
-    //     aisle.get('categories').then(function(categories) {
-    //       categories.forEach(function(category) {
-    //         var categoryEntry = {};
-    //         var categoryName = category.get('name');
-    //         categoryEntry['categoryID'] = category.get('id');
-    //         categoryEntry['categoryName'] = categoryName;
-    //         categoryEntry['products'] = temp[categoryName];
-    //         aisleEntry['categories'].addObject(categoryEntry);
-    //       });
-    //     });
-    //     listEntries.addObject(aisleEntry);
-    //   })
-
-    //   console.log(listEntries);
-    //   return listEntries;
-    // }, 1000)
-
-
+  listProductsObserver: Ember.observer('listProducts.@each.name', function() {
+    this.getListEntries();
   }),
 
   productCategoryFormIsShowing: false,
@@ -109,7 +96,7 @@ export default Ember.Component.extend({
       var intersectingCategory = Ember.computed
         .intersect(shopCategories, productCategories)[0];
       if (intersectingCategory) {
-        this.sendAction('addProductToList', product, list)
+        this.sendAction('addProductToList', product, list);
       } else {
         this.set('currentProduct', product);
         this.set('productCategoryFormAction', 'categorizeProductAndAddToList');

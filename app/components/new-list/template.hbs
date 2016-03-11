@@ -34,7 +34,7 @@
     {{#each entry.categories as |category|}}
       <span class="category-name">{{category.categoryName}}</span>
 
-      {{#each categories.products as |product|}}
+      {{#each category.products as |product|}}
         {{product.name}}
       {{/each}}
     {{/each}}
