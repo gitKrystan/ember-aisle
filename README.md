@@ -33,8 +33,8 @@ You will need the following things properly installed on your computer.
 * `ember build` (development)
 * `ember build --environment production` (production)
 
-  ### License
+### License
 
-  Copyright (c) 2016 Krystan Menne, Christopher Siems, Patrick Sullivan, and Greg Kanteres
+Copyright (c) 2016 Krystan Menne, Christopher Siems, Patrick Sullivan, and Greg Kanteres
 
-  This software is licensed under the MIT license.
+This software is licensed under the MIT license.
