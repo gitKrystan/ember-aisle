@@ -1,9 +1,14 @@
-<button {{action "showBrandForm"}} class="btn btn-block btn-default">Create Brand</button>
+<br><br>
+<h3>Add Brands</h3>
+<button {{action "showBrandForm"}} class="btn btn-block btn-info btn-lg">Create Brand</button>
+<br><br>
 {{#if showBrandForm}}
   {{new-brand createBrand="createBrand"}}
 {{/if}}
 
-<button {{action "showShopForm"}} class="btn btn-block btn-default">Create Shop</button>
+<h3>Add Shops</h3>
+<button {{action "showShopForm"}} class="btn btn-block btn-success btn-lg">Create Shop</button>
+<br><br>
 {{#if showShopForm}}
   {{new-shop
     brands=brands
@@ -13,16 +18,18 @@
   }}
 {{/if}}
 
-<button {{action "showEditShop"}} class="btn btn-block btn-default">Edit Shop</button>
+<h3>Edit A Shop</h3>
+<button {{action "showEditShop"}} class="btn btn-block btn-primary btn-lg">Edit Shop</button>
+<br><br>
 {{#if showEditShop}}
-  <h3>Edit Shop</h3>
   <label>Select a Shop</label>
   {{#power-select
     selected=currentShop
     options=shops
     onchange=(action 'setCurrentShop')
+    placeholder='Please select a shop to edit'
     as |shop|
   }}
-    {{shop.name}}
+    {{shop.brand.name}}: {{shop.name}}
   {{/power-select}}
 {{/if}}

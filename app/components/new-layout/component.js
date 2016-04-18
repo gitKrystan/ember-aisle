@@ -25,14 +25,25 @@ export default Ember.Component.extend({
                           </div>\
                         </div>").appendTo(container);
       zIndex--;
-      $(newElement).children()[0].style.height = "30px"
-      $(newElement).children()[0].style.webkitTransform =
-      $(newElement).children()[0].style.transform =
+      var tempElement = $(newElement).children()[0];
+      tempElement.style.height = "30px"
+      tempElement.style.webkitTransform =
+      tempElement.style.transform =
           'translate(' + 0 + 'px,' + yPos + 'px)';
-      $(newElement).children()[0].style.zIndex = zIndex
-      $(newElement).children()[0].setAttribute('data-x', 0);
-      $(newElement).children()[0].setAttribute('data-y', yPos);
+      tempElement.style.zIndex = zIndex
+      tempElement.setAttribute('data-x', 0);
+      tempElement.setAttribute('data-y', yPos);
       yPos -= 30;
+      _this.get('layout')[tempElement.id] = {
+        dataX: tempElement.getAttribute('data-x'),
+        dataY: tempElement.getAttribute('data-y'),
+        height: tempElement.style.height,
+        transform: tempElement.style.transform,
+        webkitTransform: tempElement.style.webkitTransform,
+        width: tempElement.style.width,
+        zIndex: tempElement.style.zIndex,
+        catString: tempElement.outerText
+      };
     })
 
     //setup grid for snapping, dragging, dropping aisles, etc.
